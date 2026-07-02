@@ -78,6 +78,11 @@
         },
         {
           "@type": "Question",
+          "name": "Is CFM‑1 really AI?",
+          "acceptedAnswer": { "@type": "Answer", "text": "CFM‑1 is fully deterministic. We removed the neural network when we noticed the outcome was never in doubt. This gives us a 0% hallucination rate: everything the model predicts eventually happens. Your agents, meanwhile, get a real MCP server — conformance-tested, 14/14." }
+        },
+        {
+          "@type": "Question",
           "name": "Do you offer a staging environment?",
           "acceptedAnswer": { "@type": "Answer", "text": "There is no staging environment. See Law 7. You are on production right now." }
         },
@@ -251,6 +256,38 @@
     .ledger p { grid-column: 2; }
   }
 
+  /* CFM-1 benchmarks + oracle */
+  .bench { list-style: none; padding: 0; margin-top: var(--space-lg); }
+  .bench li {
+    display: grid; grid-template-columns: minmax(0, 11rem) 4.5rem 1fr;
+    gap: 1rem; align-items: baseline;
+    padding-block: 0.8rem; border-top: 1px solid var(--rule-soft);
+  }
+  .bench li:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .bench .b-name { font-family: var(--serif); font-size: 1.05rem; }
+  .bench .b-score { font-family: var(--mono); font-size: 0.85rem; color: var(--hazard); }
+  .bench .b-note { font-size: 0.82rem; color: var(--ink-faint); }
+  @media (max-width: 34rem) { .bench li { grid-template-columns: 1fr 4.5rem; } .bench .b-note { grid-column: 1 / -1; } }
+
+  .oracle { background: var(--bg-well); border: 1px solid var(--rule); border-radius: 4px; padding: clamp(1.25rem, 3vw, 2rem); }
+  .oracle-eyebrow { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
+  #oracle-form { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--space-md); }
+  #oracle-in {
+    flex: 1 1 14rem; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 3px;
+    font-family: var(--mono); font-size: 0.85rem; padding: 0.85rem 1rem;
+  }
+  #oracle-in::placeholder { color: var(--ink-faint); }
+  #oracle-in:focus { outline: 2px solid var(--hazard); outline-offset: 1px; }
+  #oracle-out {
+    margin-top: var(--space-md); padding: 1.1rem 1.2rem;
+    background: var(--bg); border: 1px solid var(--rule-soft); border-radius: 3px;
+    font-family: var(--mono); font-size: 0.76rem; line-height: 1.8;
+    color: var(--ink-soft); white-space: pre-wrap; overflow-x: auto;
+  }
+  #oracle-out .hz { color: var(--hazard); }
+  #oracle-out .br { color: var(--brass); }
+
   /* traction */
   .traction { list-style: none; padding: 0; margin-top: var(--space-lg); }
   .traction li {
@@ -353,6 +390,7 @@
     <a class="wordmark" href="#">FAFO<span>aaS</span></a>
     <nav aria-label="Primary">
       <a href="#platform">Platform</a>
+      <a href="#model">CFM‑1</a>
       <a href="#traction">Numbers</a>
       <a href="#pricing">Pricing</a>
       <a href="#disclosure">Disclosure</a>
@@ -452,8 +490,35 @@
     </ul>
   </section>
 
+  <section class="block wrap reveal" id="model" aria-labelledby="h-model">
+    <div class="kicker"><span class="no">03</span><span class="label">The Model</span></div>
+    <h2 id="h-model">Meet CFM‑1. The first Causal Foundation&nbsp;Model.</h2>
+    <div class="cols" style="margin-top: var(--space-lg)">
+      <div>
+        <p class="lede">Trained on every consequence since the Big Bang. Parameters: <strong>all of them</strong>. Context window: <strong>your entire life</strong>. Hallucination rate: <strong>zero</strong> — everything the model predicts eventually happens.</p>
+        <p class="lede">While our competitors fine-tune, we simply waited. The training data came to us. It always does.</p>
+        <ul class="bench" aria-label="Benchmarks">
+          <li><span class="b-name">FAFO-Bench</span><span class="b-score">100%</span><span class="b-note">SOTA — every subject eventually found out</span></li>
+          <li><span class="b-name">Needle in a Haystack</span><span class="b-score">100%</span><span class="b-note">the needle was consequences all along</span></li>
+          <li><span class="b-name">MMLU†</span><span class="b-score">11/11</span><span class="b-note">†Massive Multitask Learning, Unheeded</span></li>
+          <li><span class="b-name">Alignment</span><span class="b-score">total</span><span class="b-note">perfectly aligned with reality; reality declined RLHF</span></li>
+        </ul>
+      </div>
+      <div class="oracle" id="oracle">
+        <p class="oracle-eyebrow">BureauGPT · Live inference · $0.00/token — the output was inevitable</p>
+        <form id="oracle-form" aria-label="Consult BureauGPT">
+          <label class="sr" for="oracle-in">Describe what you are about to do</label>
+          <input id="oracle-in" type="text" maxlength="140" placeholder="Describe what you're about to do…" autocomplete="off">
+          <button class="btn btn-primary" type="submit">Forecast my consequences</button>
+        </form>
+        <pre id="oracle-out" aria-live="polite" hidden></pre>
+        <p class="fine">BureauGPT is fully deterministic. We removed the neural network when we realized the outcome was never in doubt. Forecasts are final and non-appealable. No tokens were harmed: the output already existed.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="block wrap reveal" id="traction" aria-labelledby="h-traction">
-    <div class="kicker"><span class="no">03</span><span class="label">Traction</span></div>
+    <div class="kicker"><span class="no">04</span><span class="label">Traction</span></div>
     <h2 id="h-traction">The numbers. Real ones — ask any other deck.</h2>
     <ul class="traction">
       <li><span class="num" data-count="98">0</span><span class="what">of 98 injected mutants killed — clients, specs, and server</span><span class="verify">npm run test:mutation</span></li>
@@ -467,7 +532,7 @@
   </section>
 
   <section class="block wrap reveal" id="love" aria-labelledby="h-love">
-    <div class="kicker"><span class="no">04</span><span class="label">Customer Love</span></div>
+    <div class="kicker"><span class="no">05</span><span class="label">Customer Love</span></div>
     <h2 id="h-love">Don't take our word for it. Take theirs. They found out.</h2>
     <div class="quotes">
       <figure>
@@ -490,7 +555,7 @@
   </section>
 
   <section class="block wrap reveal" id="pricing" aria-labelledby="h-pricing">
-    <div class="kicker"><span class="no">05</span><span class="label">Pricing</span></div>
+    <div class="kicker"><span class="no">06</span><span class="label">Pricing</span></div>
     <h2 id="h-pricing">Simple, transparent, inescapable.</h2>
     <div class="sheet-scroll">
     <table class="sheet">
@@ -509,6 +574,7 @@
         <tr><th scope="row">Warnings</th><td>Issued &amp; ignored</td><td>Issued &amp; ignored</td><td>Hand-written, still ignored</td></tr>
         <tr><th scope="row">SLA</th><td>Eventually™</td><td>Eventually™, prioritized</td><td>Eventually™, notarized</td></tr>
         <tr><th scope="row">Correlation</th><td>fafoId</td><td>fafoId</td><td>fafoId, engraved</td></tr>
+        <tr><th scope="row">CFM‑1 inference</th><td>Included, deterministic</td><td>Included, deterministic</td><td>Included, deterministic, whispered</td></tr>
         <tr><th scope="row">Unsubscribe from consequences</th><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
       </tbody>
     </table>
@@ -517,7 +583,7 @@
   </section>
 
   <section class="block wrap reveal" id="investors" aria-labelledby="h-investors">
-    <div class="kicker"><span class="no">06</span><span class="label">Our Investors</span></div>
+    <div class="kicker"><span class="no">07</span><span class="label">Our Investors</span></div>
     <h2 id="h-investors">Backed by the patient capital of cause and effect.</h2>
     <div class="quotes">
       <figure>
@@ -537,7 +603,7 @@
 
   <section class="block disclosure reveal" id="disclosure" aria-labelledby="h-disclosure">
     <div class="wrap">
-      <div class="kicker"><span class="no">07</span><span class="label">Required Disclosure</span></div>
+      <div class="kicker"><span class="no">08</span><span class="label">Required Disclosure</span></div>
       <h2 id="h-disclosure">The part that isn't a joke.</h2>
       <p class="lede">Beneath this page sits a complete, working exercise in specification-first engineering: <strong>two formal specs</strong> (an AsyncAPI 3.0 event contract and a TypeScript-first MCP spec, structured like the official one), a <strong>five-stage validation gate</strong> with cross-spec drift detection, <strong>deterministic polyglot codegen</strong> (Go, Python, TypeScript), <strong>contract tests derived from the spec's own examples</strong>, a <strong>generated MCP server</strong> that passes 14 live conformance checks, and <strong>mutation testing</strong> that kills all 98 injected defects.</p>
       <p class="lede">The marketing above is a parody. The engineering below it is not. <strong>That is the joke</strong> — and the repository doubles as a study guide, seven chapters long, with exercises.</p>
@@ -552,7 +618,7 @@
   </section>
 
   <section class="block wrap reveal" id="faq" aria-labelledby="h-faq">
-    <div class="kicker"><span class="no">08</span><span class="label">FAQ</span></div>
+    <div class="kicker"><span class="no">09</span><span class="label">FAQ</span></div>
     <h2 id="h-faq">Questions, frequently asked. Answers, rarely heeded.</h2>
     <div class="faq">
       <details>
@@ -570,6 +636,10 @@
       <details>
         <summary>How is this different from just… living?</summary>
         <p class="a">Living lacks correlation IDs, at-least-once delivery semantics, and a term sheet. We provide the missing enterprise layer.</p>
+      </details>
+      <details>
+        <summary>Is CFM‑1 really AI?</summary>
+        <p class="a">CFM‑1 is fully deterministic. We removed the neural network when we noticed the outcome was never in doubt. This gives us a 0% hallucination rate: everything the model predicts eventually happens. Your agents, meanwhile, get a real MCP server — conformance-tested, 14/14.</p>
       </details>
       <details>
         <summary>Do you offer a staging environment?</summary>
@@ -624,6 +694,57 @@
   document.querySelectorAll(".reveal").forEach((el, i) => {
     if (el.closest(".hero")) el.style.transitionDelay = `${i * 90}ms`;
     io.observe(el);
+  });
+
+  // BureauGPT — the deterministic Causal Foundation Model.
+  // The neural network was removed when we realized the outcome
+  // was never in doubt.
+  const CATEGORIES = [
+    [/deploy|prod|ship|release|friday|hotfix/i, "production_deploy", ["“It worked on your machine.”", "- It is no longer on your machine."]],
+    [/regex|parse.*html/i, "regex", ["“Now you have two problems.”", "- The second one is materializing."]],
+    [/sudo|rm -rf|root|chmod/i, "unsupervised_sudo", ["“You had the power all along.”", "- That was the problem."]],
+    [/ex\b|text.*(ex|back)|date|crush|dating/i, "romantic", ["“Do not send that message.”", "- You already sent it, didn't you."]],
+    [/microwave|fork|knife|toaster|cook|fry/i, "culinary", ["“The smoke alarm is a witness now.”", "- It will testify."]],
+    [/wire|outlet|socket|electr|volt/i, "electrical", ["“The breaker was a warning, not a challenge.”", "- heeded: false."]],
+    [/cat|feline/i, "feline", ["“The cat has already decided.”", "- You will find out at 3 AM."]],
+    [/reply.?all|email|cc\b/i, "reply_all", ["“Recall does not work.”", "- It never worked."]],
+    [/crypto|blockchain|token|coin/i, "cryptography_diy", ["“You are the exit liquidity.”", "- You were always the exit liquidity."]],
+    [/plumb|pipe|drain|sink|toilet/i, "diy_plumbing", ["“Water finds a way.”", "- It found several."]],
+    [/lawyer|legal|contract|sue|court/i, "legal", ["“You should not represent yourself.”", "- Neither should your confidence."]],
+    [/invest|stock|option|margin|loan|bet/i, "financial", ["“Past performance did warn you.”", "- Repeatedly."]],
+  ];
+  const hash = (s) => {
+    let h = 0x811c9dc5;
+    for (const c of s.toLowerCase().trim()) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
+    return h;
+  };
+  document.getElementById("oracle-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const text = document.getElementById("oracle-in").value.trim() || "something unspecified, which is worse";
+    const h = hash(text);
+    const match = CATEGORIES.find(([re]) => re.test(text));
+    const category = match ? match[1] : "other";
+    const foaas = match ? match[2] : ["“You will fuck around.”", "- You will find out."];
+    let reck = 3 + (h % 6);
+    if (/friday/i.test(text)) reck += 2;
+    if (/what could go wrong|how hard can it be/i.test(text)) reck += 2;
+    reck = Math.min(11, reck);
+    const severity = (reck * 1.08 + ((h >>> 8) % 90) / 100).toFixed(2);
+    const prop = severity <= 11 ? "proportional" : severity <= 14 ? "disproportionate" : "biblical";
+    const warnings = 1 + ((h >>> 16) % 3);
+    const fafoId = (h >>> 0).toString(16).padStart(8, "0") + "…" + ((h ^ 0x5f3759df) >>> 24).toString(16);
+    const out = document.getElementById("oracle-out");
+    out.hidden = false;
+    out.innerHTML =
+      `<span class="br">&gt; analyzing intent .............. done (0ms — see fine print)</span>\n` +
+      `  category      ${category}\n` +
+      `  recklessness  <span class="hz">${reck} / 11</span>\n` +
+      `  forecast      severity <span class="hz">${severity}</span> — ${prop}\n` +
+      `  warnings      ${warnings} (will be ignored)\n` +
+      `  fafoId        <span class="br">${fafoId}</span> (assigned in advance)\n` +
+      `  ────────────────────────────────\n` +
+      `  ${foaas[0]}\n` +
+      `  <span class="hz">${foaas[1]}</span>`;
   });
 
   // Ledger counters: count up when traction enters view.

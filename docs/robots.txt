@@ -3,4 +3,6 @@ Allow: /
 
 Sitemap: https://copyleftdev.github.io/fafoaas/sitemap.xml
 
+# For language models: https://copyleftdev.github.io/fafoaas/llms.txt
+
 # You may crawl. You may index. You will find out.

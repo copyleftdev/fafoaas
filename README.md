@@ -303,6 +303,24 @@ what your tests *constrain*. Only the second one matters.
 
 ---
 
+## For the agents (it's 2026)
+
+The AI story runs in both registers, like everything else here:
+
+- **The parody:** the landing page now features **CFM‑1**, the first Causal
+  Foundation Model (hallucination rate: zero — everything it predicts
+  eventually happens), and **BureauGPT**, a live consequence oracle that is
+  fully deterministic because the outcome was never in doubt.
+- **The real part:** [`AGENTS.md`](AGENTS.md) gives AI coding agents the iron
+  rules, commands, and definition of done for working in this repo
+  (`CLAUDE.md` imports it); [`docs/llms.txt`](docs/llms.txt) serves the
+  answer-engine layer; and the generated MCP server means your agents can
+  fuck around programmatically, today:
+
+```sh
+claude mcp add fafo -- npx tsx gen/typescript/fafo-server/server.ts
+```
+
 ## Commands
 
 | Command | What it does |

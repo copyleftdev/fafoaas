@@ -1,0 +1,35 @@
+# FAFOaaS — Consequences as a Service
+
+> An event-driven homage to FOAAS and a complete, working masterclass in
+> specification-first engineering: an AsyncAPI 3.0 event contract plus a
+> TypeScript-first MCP spec, a five-stage validation gate with cross-spec
+> drift detection, deterministic polyglot code generation (Go, Python,
+> TypeScript), contract tests derived from the spec's own examples, a
+> generated MCP server passing 14 live conformance checks, and mutation
+> testing that kills all 98 injected defects. The marketing is a parody of
+> Silicon Valley oversell; the engineering underneath is real.
+
+Key facts: "fuck around" is modeled as a command event (IntentDeclared);
+"find out" is an asynchronous consequence event (ConsequenceMaterialized),
+correlated by a fafoId "Thread of Causality". Seven normative Laws of FAFO
+govern the contract (conservation of consequences, causal ordering,
+at-least-once delivery, infinite retention, no staging environment). License:
+WTFPL. All validation runs locally; there is no cloud CI.
+
+## Specifications
+
+- [AsyncAPI 3.0 event contract](https://github.com/copyleftdev/fafoaas/blob/main/spec/asyncapi.yaml): the root document — channels, request/reply, the Laws
+- [Spec module architecture](https://github.com/copyleftdev/fafoaas/blob/main/spec/README.md): how the modular $ref composition and extension recipes work
+- [FAFO-MCP specification](https://github.com/copyleftdev/fafoaas/blob/main/spec/mcp/FAFO-MCP.md): binding rules B1–B7 deriving the MCP surface from the AsyncAPI document
+- [MCP schema source of truth](https://github.com/copyleftdev/fafoaas/blob/main/spec/mcp/schema.ts): TypeScript-first, like the official MCP spec; schema.json is generated from it
+
+## Learning
+
+- [Study guide](https://github.com/copyleftdev/fafoaas#the-study-guide): seven chapters — event-first design, derived second specs, drift gates, codegen, derived contract tests, server conformance, mutation testing — with exercises
+- [Landing page](https://copyleftdev.github.io/fafoaas/): the Silicon Valley parody pitch, including CFM-1 and BureauGPT
+
+## For agents
+
+- Connect to the reference MCP server: `claude mcp add fafo -- npx tsx gen/typescript/fafo-server/server.ts`
+- [AGENTS.md](https://github.com/copyleftdev/fafoaas/blob/main/AGENTS.md): instructions for AI coding agents working in this repository
+- One command builds and proves everything: `npm run codegen`; mutation testing: `npm run test:mutation`
