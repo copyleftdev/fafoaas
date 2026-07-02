@@ -288,6 +288,59 @@
   #oracle-out .hz { color: var(--hazard); }
   #oracle-out .br { color: var(--brass); }
 
+  /* leadership */
+  .leaders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    margin-top: var(--space-lg);
+  }
+  .leader {
+    border-top: 1px solid var(--rule);
+    min-width: 0;
+    padding-top: 1rem;
+  }
+  .leader img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    background: var(--bg-well);
+  }
+  .leader h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    line-height: 1.1;
+    margin-top: 1rem;
+  }
+  .leader .role {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-top: 0.45rem;
+  }
+  .leader .origin {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-top: 0.85rem;
+  }
+  .leader .motive {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    line-height: 1.6;
+    color: var(--ink-faint);
+    margin-top: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  .leader .motive b { color: var(--hazard); font-weight: 700; }
+
   /* traction */
   .traction { list-style: none; padding: 0; margin-top: var(--space-lg); }
   .traction li {
@@ -391,6 +444,7 @@
     <nav aria-label="Primary">
       <a href="#platform">Platform</a>
       <a href="#model">CFM‑1</a>
+      <a href="#leadership">Leadership</a>
       <a href="#traction">Numbers</a>
       <a href="#pricing">Pricing</a>
       <a href="#disclosure">Disclosure</a>
@@ -517,8 +571,72 @@
     </div>
   </section>
 
+  <section class="block wrap reveal" id="leadership" aria-labelledby="h-leadership">
+    <div class="kicker"><span class="no">04</span><span class="label">Leadership</span></div>
+    <h2 id="h-leadership">The inevitable people behind the inevitability platform.</h2>
+    <p class="lede">Every category-defining company begins with a founder story. Ours begins with eight people encountering a classic Silicon Valley failure mode, mistaking it for a market, and correctly identifying themselves as the platform layer.</p>
+    <div class="leaders">
+      <article class="leader">
+        <img src="assets/leaders/cal-voss.webp" alt="Portrait of Cal Voss, FAFOaaS founder and CEO" width="760" height="760" loading="lazy">
+        <h3>Cal Voss</h3>
+        <span class="role">Founder &amp; CEO · Category Creation</span>
+        <p class="origin">Cal dropped out of three accelerators and still kept the alumni hoodie. After pivoting from accountability SaaS to regret infrastructure, he discovered that consequences had perfect retention and no meaningful competition.</p>
+        <p class="motive"><b>Passion:</b> naming inevitability before analysts do.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/mara-quill.webp" alt="Portrait of Mara Quill, FAFOaaS chief operating officer" width="760" height="760" loading="lazy">
+        <h3>Mara Quill</h3>
+        <span class="role">COO · Operating Model</span>
+        <p class="origin">Mara joined after a consulting engagement proved that most organizations already had consequences, but lacked a dashboard, a steering committee, and an owner who could say “cross-functional” without blinking.</p>
+        <p class="motive"><b>Passion:</b> turning bad decisions into repeatable process.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/dev-iyer.webp" alt="Portrait of Dev Iyer, FAFOaaS chief technology officer" width="760" height="760" loading="lazy">
+        <h3>Dev Iyer</h3>
+        <span class="role">CTO · Causal Foundation Model</span>
+        <p class="origin">Dev trained the first prototype on every incident retro he could find. The model became obsolete when he noticed the answer was always “you were warned,” deleted the neural net, and shipped the deterministic version.</p>
+        <p class="motive"><b>Passion:</b> reducing hallucination by removing choice.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/sloane-pike.webp" alt="Portrait of Sloane Pike, FAFOaaS chief marketing officer" width="760" height="760" loading="lazy">
+        <h3>Sloane Pike</h3>
+        <span class="role">CMO · Demand Generation</span>
+        <p class="origin">Sloane once A/B tested remorse and found the control group converted better after finding out. She now owns narrative, lifecycle, and the insight that every funnel is just causality with nicer labels.</p>
+        <p class="motive"><b>Passion:</b> moving users from awareness to acceptance.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/ansel-brook.webp" alt="Portrait of Ansel Brook, FAFOaaS platform and policy lead" width="760" height="760" loading="lazy">
+        <h3>Ansel Brook</h3>
+        <span class="role">Chief Platform Officer · Policy</span>
+        <p class="origin">Ansel arrived from the trust-and-safety side of a marketplace where every policy exception became a keynote. He wrote the non-appealable clause, then circled it in brass and called it customer clarity.</p>
+        <p class="motive"><b>Passion:</b> governance that admits what already happened.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/bea-finch.webp" alt="Portrait of Bea Finch, FAFOaaS chief financial officer" width="760" height="760" loading="lazy">
+        <h3>Bea Finch</h3>
+        <span class="role">CFO · Patient Capital</span>
+        <p class="origin">Bea built the model that proved the TAM was every decision ever made. When the spreadsheet found out, she revised the round upward, renamed churn “materialization,” and made the board thank her.</p>
+        <p class="motive"><b>Passion:</b> underwriting inevitability at venture scale.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/jules-tran.webp" alt="Portrait of Jules Tran, FAFOaaS developer relations leader" width="760" height="760" loading="lazy">
+        <h3>Jules Tran</h3>
+        <span class="role">Head of DevRel · Community</span>
+        <p class="origin">Jules maintained an open-source library long enough to learn that every breaking change is a seminar in consequence delivery. FAFOaaS gave that talk a protocol, a server, and a sticker budget.</p>
+        <p class="motive"><b>Passion:</b> helping agents fuck around responsibly, then subscribe.</p>
+      </article>
+      <article class="leader">
+        <img src="assets/leaders/nico-vale.webp" alt="Portrait of Nico Vale, FAFOaaS decentralization executive" width="760" height="760" loading="lazy">
+        <h3>Nico Vale</h3>
+        <span class="role">Chief Decentralization Officer · Tokens</span>
+        <p class="origin">Nico put governance on-chain, watched governance become politics with gas fees, and emerged with a conviction: consequences are the only ledger with perfect finality and truly infinite retention.</p>
+        <p class="motive"><b>Passion:</b> making immutability emotionally available.</p>
+      </article>
+    </div>
+  </section>
+
   <section class="block wrap reveal" id="traction" aria-labelledby="h-traction">
-    <div class="kicker"><span class="no">04</span><span class="label">Traction</span></div>
+    <div class="kicker"><span class="no">05</span><span class="label">Traction</span></div>
     <h2 id="h-traction">The numbers. Real ones — ask any other deck.</h2>
     <ul class="traction">
       <li><span class="num" data-count="98">0</span><span class="what">of 98 injected mutants killed — clients, specs, and server</span><span class="verify">npm run test:mutation</span></li>
@@ -532,7 +650,7 @@
   </section>
 
   <section class="block wrap reveal" id="love" aria-labelledby="h-love">
-    <div class="kicker"><span class="no">05</span><span class="label">Customer Love</span></div>
+    <div class="kicker"><span class="no">06</span><span class="label">Customer Love</span></div>
     <h2 id="h-love">Don't take our word for it. Take theirs. They found out.</h2>
     <div class="quotes">
       <figure>
@@ -555,7 +673,7 @@
   </section>
 
   <section class="block wrap reveal" id="pricing" aria-labelledby="h-pricing">
-    <div class="kicker"><span class="no">06</span><span class="label">Pricing</span></div>
+    <div class="kicker"><span class="no">07</span><span class="label">Pricing</span></div>
     <h2 id="h-pricing">Simple, transparent, inescapable.</h2>
     <div class="sheet-scroll">
     <table class="sheet">
@@ -583,7 +701,7 @@
   </section>
 
   <section class="block wrap reveal" id="investors" aria-labelledby="h-investors">
-    <div class="kicker"><span class="no">07</span><span class="label">Our Investors</span></div>
+    <div class="kicker"><span class="no">08</span><span class="label">Our Investors</span></div>
     <h2 id="h-investors">Backed by the patient capital of cause and effect.</h2>
     <div class="quotes">
       <figure>
@@ -603,7 +721,7 @@
 
   <section class="block disclosure reveal" id="disclosure" aria-labelledby="h-disclosure">
     <div class="wrap">
-      <div class="kicker"><span class="no">08</span><span class="label">Required Disclosure</span></div>
+      <div class="kicker"><span class="no">09</span><span class="label">Required Disclosure</span></div>
       <h2 id="h-disclosure">The part that isn't a joke.</h2>
       <p class="lede">Beneath this page sits a complete, working exercise in specification-first engineering: <strong>two formal specs</strong> (an AsyncAPI 3.0 event contract and a TypeScript-first MCP spec, structured like the official one), a <strong>five-stage validation gate</strong> with cross-spec drift detection, <strong>deterministic polyglot codegen</strong> (Go, Python, TypeScript), <strong>contract tests derived from the spec's own examples</strong>, a <strong>generated MCP server</strong> that passes 14 live conformance checks, and <strong>mutation testing</strong> that kills all 98 injected defects.</p>
       <p class="lede">The marketing above is a parody. The engineering below it is not. <strong>That is the joke</strong> — and the repository doubles as a study guide, seven chapters long, with exercises.</p>
@@ -618,7 +736,7 @@
   </section>
 
   <section class="block wrap reveal" id="faq" aria-labelledby="h-faq">
-    <div class="kicker"><span class="no">09</span><span class="label">FAQ</span></div>
+    <div class="kicker"><span class="no">10</span><span class="label">FAQ</span></div>
     <h2 id="h-faq">Questions, frequently asked. Answers, rarely heeded.</h2>
     <div class="faq">
       <details>
