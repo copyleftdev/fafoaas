@@ -1,0 +1,16 @@
+# Message module: WarningIssued = causality trait ⊕ Warning payload.
+name: WarningIssued
+title: Warning Issued
+summary: Somebody, or something, tries to help. It will not work.
+contentType: application/json
+traits:
+  - $ref: '../message-traits/causality.yaml'
+payload:
+  $ref: '../schemas/warning.yaml'
+examples:
+  - name: compilerKnew
+    payload:
+      source: compiler
+      text: 'warning: this cast is unsound and you know it'
+      predictedSeverity: 8
+      heeded: false

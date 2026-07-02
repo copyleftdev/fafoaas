@@ -1,0 +1,13 @@
+# Channel module: the homage broadcast. Treat with respect.
+address: fafo/v1/toldyouso
+title: The Told-You-So Broadcast
+summary: Public broadcast of vindicated warnings, in the sacred FOAAS format.
+description: |
+  When a consequence materializes for an actor who had received (and, per
+  historical invariant, ignored) at least one warning, the fabric broadcasts
+  a `ToldYouSoBroadcast` to all witnesses. The payload preserves, verbatim,
+  the ancestral FOAAS wire format: `message` + `subtitle`. This is the
+  homage channel. Treat it with respect.
+messages:
+  toldYouSoBroadcast:
+    $ref: '../components/messages/told-you-so-broadcast.yaml'

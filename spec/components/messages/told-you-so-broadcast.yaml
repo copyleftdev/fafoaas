@@ -1,0 +1,15 @@
+# Message module: ToldYouSoBroadcast = causality trait ⊕ FoaasMessage payload.
+# The homage message. The payload IS the ancestral format, unwrapped.
+name: ToldYouSoBroadcast
+title: Told You So (FOAAS Homage)
+summary: Public vindication of an ignored warning, on the ancestral wire format.
+contentType: application/json
+traits:
+  - $ref: '../message-traits/causality.yaml'
+payload:
+  $ref: '../schemas/foaas-message.yaml'
+examples:
+  - name: classic
+    payload:
+      message: 'Fucking told you so, Dave.'
+      subtitle: '- The compiler, three weeks ago'

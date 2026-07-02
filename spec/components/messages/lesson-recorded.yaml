@@ -1,0 +1,16 @@
+# Message module: LessonRecorded = causality trait ⊕ Lesson payload.
+name: LessonRecorded
+title: Lesson Recorded
+summary: Self-reported learning outcome. Feeds the Recidivism Index.
+contentType: application/json
+traits:
+  - $ref: '../message-traits/causality.yaml'
+payload:
+  $ref: '../schemas/lesson.yaml'
+examples:
+  - name: growth
+    payload:
+      learned: true
+      durable: false
+      willDoItAgainAnyway: true
+      notes: 'Next time I will fuck around slightly differently.'

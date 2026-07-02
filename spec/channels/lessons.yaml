@@ -1,0 +1,11 @@
+# Channel module: the lessons ledger. Audited for honesty via correlation.
+address: fafo/v1/lessons
+title: The Lessons Ledger
+summary: Self-reported learning outcomes. Audited for honesty.
+description: |
+  After finding out, actors SHOULD publish a `LessonRecorded` event.
+  The Bureau correlates `willDoItAgainAnyway: true` submissions with
+  subsequent `IntentDeclared` events to compute the global Recidivism Index.
+messages:
+  lessonRecorded:
+    $ref: '../components/messages/lesson-recorded.yaml'

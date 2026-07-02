@@ -1,0 +1,11 @@
+# Server module: real-time consequence delivery.
+host: findout.fafoaas.io
+pathname: /v1/stream
+protocol: wss
+title: The Findout Edge
+summary: Real-time consequence delivery for those who need to know *now*.
+description: |
+  WebSocket fan-out of the findout log. Latency is best-effort; the
+  consequence already happened, you are merely being informed.
+security:
+  - $ref: '../components/security-schemes/findout-bearer.yaml'

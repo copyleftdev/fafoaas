@@ -1,0 +1,16 @@
+# Schema module: Lesson — self-reported learning outcome.
+type: object
+description: A self-reported learning outcome.
+required:
+  - learned
+properties:
+  learned:
+    type: boolean
+  durable:
+    type: boolean
+    description: Whether the lesson is expected to survive the next opportunity.
+  willDoItAgainAnyway:
+    type: boolean
+    description: The honesty field. Feeds the Recidivism Index.
+  notes:
+    type: string

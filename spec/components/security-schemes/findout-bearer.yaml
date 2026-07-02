@@ -1,0 +1,5 @@
+# Security module: edge auth for the WebSocket findout stream.
+type: http
+scheme: bearer
+bearerFormat: JWT
+description: Edge auth for the WebSocket findout stream.

@@ -1,0 +1,23 @@
+# Message module: IntentDeclared = causality trait ⊕ Intent payload.
+name: IntentDeclared
+title: Intent Declared
+summary: An actor announces they are about to fuck around.
+contentType: application/json
+traits:
+  - $ref: '../message-traits/causality.yaml'
+payload:
+  $ref: '../schemas/intent.yaml'
+examples:
+  - name: prodFriday
+    summary: A classic of the genre.
+    payload:
+      category: production_deploy
+      recklessness: 9
+      description: 'Deploying to prod at 16:55 on a Friday. What could go wrong?'
+      safeguardsClaimed:
+        - 'it worked on my machine'
+        - 'the tests are probably flaky anyway'
+      warningsDisregarded: 3
+      witnesses:
+        - the-intern
+        - '#platform-oncall'

@@ -1,0 +1,5 @@
+# Trait module: bureauAudited — applied to every send operation.
+description: >
+  Every send operation is written to the Bureau's immutable audit log
+  before the producer receives its broker ack. You cannot outrun the
+  audit log. People have tried.

@@ -1,0 +1,22 @@
+# Channel module: the write side. Publishing is cheap; that is the trap.
+address: 'fafo/v1/around/{actorId}'
+title: The Fucking-Around Channel
+summary: Intents to fuck around, declared per actor.
+description: |
+  Actors publish declarations of intent here. Publishing is cheap, instant,
+  and requires no qualifications whatsoever — by design, matching observed
+  reality. The fabric never rejects an intent; it merely remembers it.
+parameters:
+  actorId:
+    $ref: '../components/parameters/actor-id.yaml'
+messages:
+  intentDeclared:
+    $ref: '../components/messages/intent-declared.yaml'
+  aroundEscalated:
+    $ref: '../components/messages/around-escalated.yaml'
+bindings:
+  kafka:
+    topic: fafo.v1.around
+    partitions: 42
+    replicas: 3
+    bindingVersion: 0.5.0

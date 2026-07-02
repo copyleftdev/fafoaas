@@ -1,0 +1,16 @@
+# Message module: AroundEscalated = causality trait ⊕ Escalation payload.
+name: AroundEscalated
+title: Around Escalated
+summary: An actor, warned, chooses violence (continued).
+contentType: application/json
+traits:
+  - $ref: '../message-traits/causality.yaml'
+payload:
+  $ref: '../schemas/escalation.yaml'
+examples:
+  - name: forcePush
+    summary: The escalation heard round the world.
+    payload:
+      newRecklessness: 11
+      justification: '--force-with-lease was taking too long'
+      warningsDisregardedThisTime: 2

@@ -1,0 +1,34 @@
+# Trait module: causality — headers shared by EVERY message in the system.
+# Metadata rides in headers, never in payloads. New system-wide metadata is
+# added HERE, once, and every message inherits it. That is the point of traits.
+headers:
+  type: object
+  required:
+    - fafoId
+    - actorId
+    - occurredAt
+    - sequence
+  properties:
+    fafoId:
+      type: string
+      format: uuid
+      description: The Thread of Causality (see correlation-ids/fafo-thread).
+    actorId:
+      type: string
+      description: Who is fucking around / finding out.
+    occurredAt:
+      type: string
+      format: date-time
+      description: >
+        When the event *occurred*, not when it was received. The gap
+        between the two is called dread.
+    sequence:
+      type: integer
+      minimum: 0
+      description: Monotonic per-actor sequence number enforcing Law 2.
+    schemaVersion:
+      type: string
+      default: '1.0.0'
+      description: Semver of the payload schema.
+correlationId:
+  $ref: '../correlation-ids/fafo-thread.yaml'

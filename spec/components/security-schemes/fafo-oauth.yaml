@@ -1,0 +1,20 @@
+# Security module: actor OAuth. Scope semantics are load-bearing:
+# fafo:around implies fafo:findout, irrevocably. See FAFO-MCP rule B6.
+type: oauth2
+description: |
+  OAuth2 for actors. Note the scope semantics: `fafo:around` is granted
+  to any authenticated principal on request — the fabric has never
+  gatekept fucking around. `fafo:findout` is granted implicitly with
+  `fafo:around` and CANNOT be revoked, surrendered, or excluded from
+  the consent screen. Attempting to request `fafo:around` without
+  `fafo:findout` is the canonical example of not understanding the system.
+flows:
+  clientCredentials:
+    tokenUrl: 'https://auth.fafoaas.io/token'
+    availableScopes:
+      'fafo:around': Declare and escalate intents.
+      'fafo:findout': Receive consequences. Implicit. Irrevocable.
+      'fafo:witness': Receive ToldYouSo broadcasts for threads you witnessed.
+scopes:
+  - 'fafo:around'
+  - 'fafo:findout'

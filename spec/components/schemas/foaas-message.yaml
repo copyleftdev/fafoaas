@@ -1,0 +1,22 @@
+# Schema module: FoaasMessage — the ancestral wire format. Do not modify.
+# This module is frozen in homage. Changes require a séance with the FOAAS
+# maintainers, not a pull request.
+type: object
+description: |
+  The ancestral FOAAS wire format, preserved byte-for-byte in spirit:
+  a `message` and a `subtitle`. Every consequence, no matter how severe,
+  can be expressed in this form. That was FOAAS's great insight.
+required:
+  - message
+  - subtitle
+properties:
+  message:
+    type: string
+    examples:
+      - 'You fucked around.'
+      - 'Fucking told you so, Dave.'
+  subtitle:
+    type: string
+    examples:
+      - '- You found out.'
+      - '- The Bureau of Consequences'

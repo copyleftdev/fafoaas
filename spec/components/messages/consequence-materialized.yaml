@@ -1,0 +1,24 @@
+# Message module: ConsequenceMaterialized = causality trait ⊕ Consequence payload.
+# Shared by BOTH the findout channel and the unclaimed DLQ — one message
+# definition, two routes. Consequences do not change shape when you flee.
+name: ConsequenceMaterialized
+title: Consequence Materialized
+summary: The finding-out. Delivered at-least-once, retained forever.
+contentType: application/json
+traits:
+  - $ref: '../message-traits/causality.yaml'
+payload:
+  $ref: '../schemas/consequence.yaml'
+examples:
+  - name: prodFridayResolves
+    summary: The reply to the prodFriday intent, 43 minutes later.
+    payload:
+      consequenceId: 'c0ffee00-dead-beef-cafe-000000000042'
+      severity: 9.7
+      proportionality: proportional
+      category: production_deploy
+      deliveryAttempt: 1
+      appealable: false
+      foaas:
+        message: 'You fucked around.'
+        subtitle: '- You found out.'

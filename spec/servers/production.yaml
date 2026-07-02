@@ -1,0 +1,18 @@
+# Server module: the only environment. See Law 7.
+host: 'fabric.fafoaas.io:9092'
+protocol: kafka-secure
+title: The Causality Fabric
+summary: The only environment.
+description: |
+  There is no staging environment for consequences. There is no sandbox.
+  There is no dry run. Every published intent is live. This is the point.
+security:
+  - $ref: '../components/security-schemes/sasl-scram.yaml'
+bindings:
+  kafka:
+    schemaRegistryUrl: 'https://schemas.fafoaas.io'
+    schemaRegistryVendor: confluent
+    bindingVersion: 0.5.0
+tags:
+  - name: 'env:production'
+    description: The only value this tag will ever hold.

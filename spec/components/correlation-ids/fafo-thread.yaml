@@ -1,0 +1,7 @@
+# Correlation module: the Thread of Causality.
+description: |
+  The Thread of Causality. Links every event in a single
+  around → warning → escalation → findout → lesson lifecycle.
+  Assigned by the fabric at `IntentDeclared`; immutable thereafter.
+  You can lose the correlation ID. The fabric cannot.
+location: '$message.header#/fafoId'

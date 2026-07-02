@@ -1,0 +1,39 @@
+# Schema module: Intent — the write side of causality.
+type: object
+description: A declaration of imminent fucking-around.
+required:
+  - category
+  - recklessness
+  - description
+properties:
+  category:
+    $ref: './fafo-category.yaml'
+  recklessness:
+    type: integer
+    minimum: 0
+    maximum: 11
+    description: >
+      Self-assessed recklessness. The scale goes to eleven. The Bureau
+      recalibrates self-assessments upward by a factor derived from the
+      phrase "how hard can it be" appearing in `description`.
+  description:
+    type: string
+    maxLength: 512
+    description: What, precisely, you are about to do. Be honest. The log is forever.
+  safeguardsClaimed:
+    type: array
+    items:
+      type: string
+    description: >
+      Safeguards the actor believes are in place. Recorded verbatim for
+      comedic value during the retro. Ignored by the severity engine.
+  warningsDisregarded:
+    type: integer
+    minimum: 0
+    default: 0
+    description: Warnings already received and ignored before declaring.
+  witnesses:
+    type: array
+    items:
+      type: string
+    description: Actors or channels who will receive ToldYouSo broadcasts.

@@ -1,0 +1,14 @@
+# Channel module: the DLQ. Reuses the ConsequenceMaterialized message module —
+# consequences do not change shape when you flee, only ownership.
+address: fafo/v1/findout/unclaimed
+title: The Unclaimed Consequences Queue
+summary: Dead-letter queue for consequences whose actors have fled.
+description: |
+  Consequences are never dropped. If an actor deletes their account,
+  disables notifications, or moves to a cabin in the woods, their
+  materialized consequences are routed here, where they accrue interest
+  until claimed by the actor or inherited by their next of kin, employer,
+  or on-call rotation.
+messages:
+  consequenceMaterialized:
+    $ref: '../components/messages/consequence-materialized.yaml'

@@ -1,0 +1,261 @@
+# ============================================================================
+# FAFOaaS — root AsyncAPI document.
+#
+# This file is WIRING, not substance. It owns three things:
+#   1. Identity & the Laws of FAFO (info)
+#   2. Topology (operations — who sends/receives what, where, with what reply)
+#   3. The public pointer surface (components index)
+#
+# Everything else lives in modules:
+#   servers/     one file per environment (there is exactly one environment)
+#   channels/    one file per channel
+#   components/  one file per message, schema, trait, parameter, scheme
+#
+# GOVERNANCE RULES
+#   - Public JSON Pointers (e.g. `#/components/schemas/Intent`,
+#     `#/channels/findout`) are a STABLE API. FAFO-MCP.md references them
+#     normatively. Renaming a key here is a breaking change; renaming a
+#     module file is not.
+#   - Operations stay in this file: AsyncAPI 3.0 requires operation.channel
+#     to be a Reference into the containing document, and the topology IS
+#     the root's job.
+#   - Every change must pass `scripts/validate.sh` before push. There is no
+#     cloud CI. There is also no staging environment. These facts are related.
+# ============================================================================
+asyncapi: 3.0.0
+id: 'urn:io.codetestcode:fafoaas'
+
+info:
+  title: FAFO as a Service (FAFOaaS)
+  version: 1.0.0
+  description: |
+    **Causality as a Service.**
+
+    A loving, event-driven reimagining of [FOAAS](https://github.com/tomdionysus/foaas).
+    FOAAS was request/response: you asked to be told off, and you were told off,
+    synchronously, politely, within an HTTP round trip. A simpler time.
+
+    FAFO does not work that way, because FAFO is not a query — it is a *causal process*.
+    You **fuck around** (a command, published as an event of intent) and you
+    **find out** (a consequence, materialized asynchronously by the fabric).
+    Nobody has ever found out synchronously. The gap between the two is where
+    all of engineering, law, and romance happens.
+
+    ### The Laws of FAFO (normative)
+
+    1. **Conservation of Consequences.** Over any complete causal thread,
+       `∫ findout ≥ ∫ around`. The fabric MAY amplify; it MUST NOT attenuate.
+    2. **Causal ordering.** Within an actor's partition, you never find out
+       *before* you fuck around. A strict happens-before relation is enforced.
+       Cross-actor ordering is undefined, which is why other people appear to
+       get away with things.
+    3. **At-least-once delivery.** Consequences may be delivered more than once.
+       Consumers MUST deduplicate by `consequenceId`; the universe retries anyway.
+    4. **Acknowledgement is not absolution.** Acking a consequence confirms
+       *receipt*, not *acceptance*, and does not prevent redelivery in dreams.
+    5. **Partitioning is by actor.** Your consequences are keyed to you. They do
+       not rebalance to another consumer, no matter how the group is configured.
+    6. **Infinite retention.** The findout log is immutable and retained forever.
+       There is no compaction. The internet remembers.
+    7. **There is no staging environment.** All fucking around occurs in
+       production. See `servers`.
+
+  contact:
+    name: The Bureau of Consequences
+    email: dj@codetestcode.io
+  license:
+    name: WTFPL
+    url: 'http://www.wtfpl.net/'
+  tags:
+    - name: fafo
+      description: Core causal operations.
+    - name: foaas-homage
+      description: Operations preserving the sacred FOAAS message format.
+    - name: bureau
+      description: Internal operations of the Bureau of Consequences.
+  externalDocs:
+    description: The ancestral spec — FOAAS, of blessed memory.
+    url: 'https://github.com/tomdionysus/foaas'
+
+defaultContentType: application/json
+
+servers:
+  production:
+    $ref: './servers/production.yaml'
+  edge:
+    $ref: './servers/edge.yaml'
+
+channels:
+  around:
+    $ref: './channels/around.yaml'
+  warnings:
+    $ref: './channels/warnings.yaml'
+  findout:
+    $ref: './channels/findout.yaml'
+  toldYouSo:
+    $ref: './channels/toldyouso.yaml'
+  lessons:
+    $ref: './channels/lessons.yaml'
+  unclaimed:
+    $ref: './channels/unclaimed.yaml'
+
+# ----------------------------------------------------------------------------
+# Topology. Thin by design: action + channel + messages + reply + traits.
+# Substance belongs in the modules; if an operation grows a payload opinion,
+# it is trying to become a message and should be stopped.
+# ----------------------------------------------------------------------------
+operations:
+  declareIntent:
+    action: send
+    channel:
+      $ref: '#/channels/around'
+    title: Fuck Around
+    summary: Declare an intent to fuck around. The only prerequisite is audacity.
+    description: |
+      Request/reply in the truest AsyncAPI 3.0 sense: the reply arrives on the
+      actor's own findout channel, correlated by `fafoId` — the thread of
+      causality. Note the reply's SLA (`eventually`): consequences honor no
+      timeout, and a quiet fabric MUST NOT be interpreted as forgiveness.
+    security:
+      - $ref: '#/components/securitySchemes/fafoOAuth'
+    messages:
+      - $ref: '#/channels/around/messages/intentDeclared'
+    reply:
+      channel:
+        $ref: '#/channels/findout'
+      messages:
+        - $ref: '#/channels/findout/messages/consequenceMaterialized'
+    traits:
+      - $ref: '#/components/operationTraits/bureauAudited'
+    tags:
+      - name: fafo
+
+  escalate:
+    action: send
+    channel:
+      $ref: '#/channels/around'
+    title: Double Down
+    summary: Escalate an in-flight intent after receiving a warning.
+    description: |
+      Raises the recklessness of an open causal thread. Escalation compounds:
+      per the Conservation Law, consequence severity is computed on the
+      *integral* of recklessness over the thread, not the final value.
+      This operation exists because every incident retro contains the phrase
+      "and then, instead of stopping, we…".
+    messages:
+      - $ref: '#/channels/around/messages/aroundEscalated'
+    traits:
+      - $ref: '#/components/operationTraits/bureauAudited'
+    tags:
+      - name: fafo
+
+  onWarning:
+    action: receive
+    channel:
+      $ref: '#/channels/warnings'
+    title: Be Warned
+    summary: Receive advisory warnings. Subscribing is optional; so is listening.
+    tags:
+      - name: fafo
+
+  onFindOut:
+    action: receive
+    channel:
+      $ref: '#/channels/findout'
+    title: Find Out
+    summary: Receive materialized consequences. Subscription is implicit and irrevocable.
+    description: |
+      Every actor is subscribed to their own findout channel by virtue of
+      existing. Client code that fails to consume this operation does not
+      prevent delivery; it merely guarantees surprise.
+    tags:
+      - name: fafo
+
+  onToldYouSo:
+    action: receive
+    channel:
+      $ref: '#/channels/toldYouSo'
+    title: Savor Vindication
+    summary: Receive public told-you-so broadcasts in classic FOAAS format.
+    tags:
+      - name: foaas-homage
+
+  recordLesson:
+    action: send
+    channel:
+      $ref: '#/channels/lessons'
+    title: Record Lesson
+    summary: Self-report what was learned. Honesty optional, correlation inevitable.
+    tags:
+      - name: fafo
+
+  reapUnclaimed:
+    action: receive
+    channel:
+      $ref: '#/channels/unclaimed'
+    title: Reap Unclaimed Consequences
+    summary: Bureau-only. Consequences are never dropped, only inherited.
+    security:
+      - $ref: '#/components/securitySchemes/saslScram'
+    tags:
+      - name: bureau
+
+# ----------------------------------------------------------------------------
+# Public pointer surface. The KEYS here are the contract's stable names —
+# FAFO-MCP rule B5 binds to `#/components/schemas/*` by these keys. The VALUES
+# are storage details and may move freely.
+# ----------------------------------------------------------------------------
+components:
+  parameters:
+    actorId:
+      $ref: './components/parameters/actor-id.yaml'
+
+  correlationIds:
+    fafoThread:
+      $ref: './components/correlation-ids/fafo-thread.yaml'
+
+  messageTraits:
+    causality:
+      $ref: './components/message-traits/causality.yaml'
+
+  operationTraits:
+    bureauAudited:
+      $ref: './components/operation-traits/bureau-audited.yaml'
+
+  messages:
+    IntentDeclared:
+      $ref: './components/messages/intent-declared.yaml'
+    AroundEscalated:
+      $ref: './components/messages/around-escalated.yaml'
+    WarningIssued:
+      $ref: './components/messages/warning-issued.yaml'
+    ConsequenceMaterialized:
+      $ref: './components/messages/consequence-materialized.yaml'
+    ToldYouSoBroadcast:
+      $ref: './components/messages/told-you-so-broadcast.yaml'
+    LessonRecorded:
+      $ref: './components/messages/lesson-recorded.yaml'
+
+  schemas:
+    Intent:
+      $ref: './components/schemas/intent.yaml'
+    Escalation:
+      $ref: './components/schemas/escalation.yaml'
+    Warning:
+      $ref: './components/schemas/warning.yaml'
+    Consequence:
+      $ref: './components/schemas/consequence.yaml'
+    Lesson:
+      $ref: './components/schemas/lesson.yaml'
+    FoaasMessage:
+      $ref: './components/schemas/foaas-message.yaml'
+    FafoCategory:
+      $ref: './components/schemas/fafo-category.yaml'
+
+  securitySchemes:
+    saslScram:
+      $ref: './components/security-schemes/sasl-scram.yaml'
+    fafoOAuth:
+      $ref: './components/security-schemes/fafo-oauth.yaml'
+    findoutBearer:
+      $ref: './components/security-schemes/findout-bearer.yaml'

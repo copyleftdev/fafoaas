@@ -1,0 +1,15 @@
+# Channel module: advisory traffic. Historically unheeded.
+address: 'fafo/v1/warnings/{actorId}'
+title: The Warnings Channel
+summary: Advisory events. Historically unheeded.
+description: |
+  The fabric, and any subscribed witnesses, MAY emit warnings toward an
+  actor whose declared intent has a predicted consequence severity above
+  threshold. Warnings are informational. No warning has ever blocked an
+  intent. This channel exists so that `ToldYouSo` events have provenance.
+parameters:
+  actorId:
+    $ref: '../components/parameters/actor-id.yaml'
+messages:
+  warningIssued:
+    $ref: '../components/messages/warning-issued.yaml'

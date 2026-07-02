@@ -1,0 +1,35 @@
+# Schema module: Warning — structurally incapable of preventing anything.
+# EXTENSION POINT: new warning sources go in `source.enum`. All sources are
+# equally ignorable; ordering is not significance.
+type: object
+description: An advisory event. Structurally incapable of preventing anything.
+required:
+  - source
+  - text
+properties:
+  source:
+    type: string
+    enum:
+      - friend
+      - mother
+      - senior_engineer
+      - documentation
+      - compiler
+      - linter
+      - terms_of_service
+      - clearly_posted_sign
+      - past_self
+      - this_very_spec
+    description: Where the warning came from. All sources are equally ignorable.
+  text:
+    type: string
+  predictedSeverity:
+    type: number
+    minimum: 0
+    description: The Bureau's forecast of the eventual finding-out.
+  heeded:
+    type: boolean
+    const: false
+    description: >
+      Whether the warning was heeded. This field is a boolean for schema
+      hygiene and a constant for historical accuracy.

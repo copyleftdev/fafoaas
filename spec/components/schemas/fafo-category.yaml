@@ -1,0 +1,23 @@
+# Schema module: FafoCategory
+# The recognized domains of fucking around.
+# EXTENSION POINT: add a value here and it propagates to Intent, Consequence,
+# tool inputSchemas (via FAFO-MCP rule B5), and prompt-argument completion.
+type: string
+description: The recognized domains of fucking around. Extensible; regrettably.
+enum:
+  - electrical
+  - mechanical
+  - chemical
+  - legal
+  - financial
+  - romantic
+  - culinary
+  - feline
+  - wildlife
+  - production_deploy
+  - regex
+  - cryptography_diy
+  - diy_plumbing
+  - unsupervised_sudo
+  - reply_all
+  - other

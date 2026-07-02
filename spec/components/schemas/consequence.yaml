@@ -1,0 +1,40 @@
+# Schema module: Consequence — the finding-out. Composes FoaasMessage (homage)
+# and FafoCategory (taxonomy). Immutable by contract: see `appealable`.
+type: object
+description: A materialized finding-out. Immutable. Non-appealable.
+required:
+  - consequenceId
+  - severity
+  - proportionality
+  - category
+  - foaas
+properties:
+  consequenceId:
+    type: string
+    format: uuid
+    description: Deduplication key. The universe retries; you must not double-count.
+  severity:
+    type: number
+    minimum: 0
+    description: >
+      Computed per the Conservation Law from the integral of recklessness
+      over the causal thread. MAY exceed 11; the input scale is capped,
+      the output scale is not. This asymmetry is the entire lesson.
+  proportionality:
+    type: string
+    enum:
+      - proportional
+      - disproportionate
+      - biblical
+    description: The fabric's own assessment of its work.
+  category:
+    $ref: './fafo-category.yaml'
+  deliveryAttempt:
+    type: integer
+    minimum: 1
+    description: Which delivery attempt this is. See Law 3.
+  appealable:
+    type: boolean
+    const: false
+  foaas:
+    $ref: './foaas-message.yaml'

@@ -1,0 +1,17 @@
+# Schema module: Escalation — recklessness increase on an open causal thread.
+type: object
+description: A recklessness increase on an open causal thread.
+required:
+  - newRecklessness
+properties:
+  newRecklessness:
+    type: integer
+    minimum: 0
+    maximum: 11
+    description: Must exceed the thread's current recklessness. It always does.
+  justification:
+    type: string
+    description: Preserved verbatim for the incident report.
+  warningsDisregardedThisTime:
+    type: integer
+    minimum: 0

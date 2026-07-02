@@ -1,0 +1,28 @@
+# Channel module: the heart of the system. Infinite retention is not a
+# configuration choice here; it is the domain model (Law 6).
+address: 'fafo/v1/findout/{actorId}'
+title: The Finding-Out Channel
+summary: Materialized consequences, delivered per actor. Infinite retention.
+description: |
+  The heart of the system. Consequences are computed by the Bureau of
+  Consequences from declared intents, per the Conservation Law, and
+  published here after a nondeterministic delay (`x-sla: eventually`).
+  Consumers cannot unsubscribe from consequences that have already
+  materialized; they can only stop listening, which is not the same thing.
+parameters:
+  actorId:
+    $ref: '../components/parameters/actor-id.yaml'
+messages:
+  consequenceMaterialized:
+    $ref: '../components/messages/consequence-materialized.yaml'
+bindings:
+  kafka:
+    topic: fafo.v1.findout
+    partitions: 42
+    replicas: 3
+    topicConfiguration:
+      cleanup.policy:
+        - delete
+      retention.ms: -1
+    bindingVersion: 0.5.0
+x-sla: eventually

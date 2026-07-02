@@ -1,0 +1,3 @@
+# Security module: broker-level auth for the Causality Fabric.
+type: scramSha512
+description: Broker-level auth for the Causality Fabric. Bureau-issued.

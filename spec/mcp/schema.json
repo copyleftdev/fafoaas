@@ -1,0 +1,587 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ActorId": {
+            "description": "Stable identifier of the actor doing the fucking-around. Consequences are\npartitioned by this value and never rebalance to another actor.",
+            "type": "string"
+        },
+        "Consequence": {
+            "additionalProperties": false,
+            "description": "A materialized finding-out. Immutable. Non-appealable.\nMirror of `asyncapi.yaml#/components/schemas/Consequence`.",
+            "properties": {
+                "appealable": {
+                    "const": false,
+                    "title": "appealable",
+                    "type": "boolean"
+                },
+                "category": {
+                    "$ref": "#/definitions/FafoCategory",
+                    "title": "category"
+                },
+                "consequenceId": {
+                    "description": "Deduplication key. The universe retries; you must not double-count.",
+                    "format": "uuid",
+                    "title": "consequenceId",
+                    "type": "string"
+                },
+                "deliveryAttempt": {
+                    "description": "Which delivery attempt this is. See Law 3.",
+                    "minimum": 1,
+                    "title": "deliveryAttempt",
+                    "type": "integer"
+                },
+                "foaas": {
+                    "$ref": "#/definitions/FoaasMessage",
+                    "title": "foaas"
+                },
+                "proportionality": {
+                    "description": "The fabric's own assessment of its work.",
+                    "enum": [
+                        "biblical",
+                        "disproportionate",
+                        "proportional"
+                    ],
+                    "title": "proportionality",
+                    "type": "string"
+                },
+                "severity": {
+                    "description": "Computed per the Conservation Law from the integral of recklessness over\nthe causal thread. MAY exceed 11; the input scale is capped, the output\nscale is not. This asymmetry is the entire lesson.",
+                    "minimum": 0,
+                    "title": "severity",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "category",
+                "consequenceId",
+                "foaas",
+                "proportionality",
+                "severity"
+            ],
+            "title": "Consequence",
+            "type": "object"
+        },
+        "EscalateInput": {
+            "additionalProperties": false,
+            "description": "Input for `escalate` ← `asyncapi.yaml#/operations/escalate`.",
+            "properties": {
+                "actorId": {
+                    "description": "Stable identifier of the actor doing the fucking-around. Consequences are\npartitioned by this value and never rebalance to another actor.",
+                    "title": "actorId",
+                    "type": "string"
+                },
+                "fafoId": {
+                    "description": "The open causal thread being escalated.",
+                    "format": "uuid",
+                    "title": "fafoId",
+                    "type": "string"
+                },
+                "justification": {
+                    "description": "Preserved verbatim for the incident report.",
+                    "title": "justification",
+                    "type": "string"
+                },
+                "newRecklessness": {
+                    "description": "Must exceed the thread's current recklessness. It always does.",
+                    "maximum": 11,
+                    "minimum": 0,
+                    "title": "newRecklessness",
+                    "type": "integer"
+                },
+                "warningsDisregardedThisTime": {
+                    "minimum": 0,
+                    "title": "warningsDisregardedThisTime",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "actorId",
+                "fafoId",
+                "newRecklessness"
+            ],
+            "type": "object"
+        },
+        "EscalateOutput": {
+            "additionalProperties": false,
+            "description": "Result of `escalate`. The integral has been recalculated.",
+            "properties": {
+                "fafoId": {
+                    "description": "The Thread of Causality. Links every event in a single\naround → warning → escalation → findout → lesson lifecycle.\nAssigned by the fabric at intent declaration; immutable thereafter.",
+                    "format": "uuid",
+                    "title": "fafoId",
+                    "type": "string"
+                },
+                "severityForecastRevision": {
+                    "const": "upward",
+                    "description": "Always \"upward\".",
+                    "title": "severityForecastRevision",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "consequences_pending",
+                    "title": "status",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "fafoId",
+                "severityForecastRevision",
+                "status"
+            ],
+            "type": "object"
+        },
+        "Escalation": {
+            "additionalProperties": false,
+            "description": "A recklessness increase on an open causal thread.\nMirror of `asyncapi.yaml#/components/schemas/Escalation`.",
+            "properties": {
+                "justification": {
+                    "description": "Preserved verbatim for the incident report.",
+                    "title": "justification",
+                    "type": "string"
+                },
+                "newRecklessness": {
+                    "description": "Must exceed the thread's current recklessness. It always does.",
+                    "maximum": 11,
+                    "minimum": 0,
+                    "title": "newRecklessness",
+                    "type": "integer"
+                },
+                "warningsDisregardedThisTime": {
+                    "minimum": 0,
+                    "title": "warningsDisregardedThisTime",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "newRecklessness"
+            ],
+            "type": "object"
+        },
+        "FafoCategory": {
+            "description": "The recognized domains of fucking around. Extensible; regrettably.\nMirror of `asyncapi.yaml#/components/schemas/FafoCategory` — extend it\nthere first; this type follows.",
+            "enum": [
+                "chemical",
+                "cryptography_diy",
+                "culinary",
+                "diy_plumbing",
+                "electrical",
+                "feline",
+                "financial",
+                "legal",
+                "mechanical",
+                "other",
+                "production_deploy",
+                "regex",
+                "reply_all",
+                "romantic",
+                "unsupervised_sudo",
+                "wildlife"
+            ],
+            "title": "FafoCategory",
+            "type": "string"
+        },
+        "FafoErrorCode": {
+            "description": "fafo-mcp JSON-RPC error codes. Error `data` MUST include `fafoId` where a\nthread exists, and MAY include a FoaasMessage restating the error in the\nancestral format.",
+            "enum": [
+                -32040,
+                -32041,
+                -32042,
+                -32043,
+                -32044
+            ],
+            "type": "number"
+        },
+        "FafoId": {
+            "description": "The Thread of Causality. Links every event in a single\naround → warning → escalation → findout → lesson lifecycle.\nAssigned by the fabric at intent declaration; immutable thereafter.",
+            "format": "uuid",
+            "type": "string"
+        },
+        "FafoToolName": {
+            "description": "The complete, closed set of fafo-mcp tool names.",
+            "enum": [
+                "escalate",
+                "find_out",
+                "fuck_around",
+                "record_lesson",
+                "told_you_so"
+            ],
+            "type": "string"
+        },
+        "FindOutInput": {
+            "additionalProperties": false,
+            "description": "Input for `find_out` — polling companion (B3) for hosts without\nresource-subscription support. They exist; we forgive them.",
+            "properties": {
+                "actorId": {
+                    "description": "Stable identifier of the actor doing the fucking-around. Consequences are\npartitioned by this value and never rebalance to another actor.",
+                    "title": "actorId",
+                    "type": "string"
+                },
+                "afterSequence": {
+                    "description": "Return only consequences with a header sequence greater than this.",
+                    "minimum": 0,
+                    "title": "afterSequence",
+                    "type": "integer"
+                },
+                "fafoId": {
+                    "description": "Restrict to a single causal thread.",
+                    "format": "uuid",
+                    "title": "fafoId",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "actorId"
+            ],
+            "type": "object"
+        },
+        "FindOutOutput": {
+            "additionalProperties": false,
+            "description": "Result of `find_out`. Deduplicate by `consequenceId`; the universe retries.",
+            "properties": {
+                "consequences": {
+                    "items": {
+                        "$ref": "#/definitions/Consequence"
+                    },
+                    "title": "consequences",
+                    "type": "array"
+                },
+                "pending": {
+                    "description": "True if consequences exist that have not yet materialized. Usually true.",
+                    "title": "pending",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "consequences",
+                "pending"
+            ],
+            "type": "object"
+        },
+        "FoaasMessage": {
+            "additionalProperties": false,
+            "description": "The ancestral FOAAS wire format, preserved byte-for-byte in spirit.\nEvery consequence, no matter how severe, can be expressed as a `message`\nand a `subtitle`. That was FOAAS's great insight. This interface is FROZEN\nin homage — changes require a séance with the FOAAS maintainers.\nMirror of `asyncapi.yaml#/components/schemas/FoaasMessage`.",
+            "properties": {
+                "message": {
+                    "title": "message",
+                    "type": "string"
+                },
+                "subtitle": {
+                    "description": "MUST begin with \"- \". This is not negotiable; it is the whole homage.",
+                    "title": "subtitle",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "subtitle"
+            ],
+            "title": "FoaasMessage",
+            "type": "object"
+        },
+        "FuckAroundInput": {
+            "additionalProperties": false,
+            "description": "Input for `fuck_around` ← `asyncapi.yaml#/operations/declareIntent`.\nThe Intent payload ⊕ the channel parameter (B1). Headers (`fafoId`,\n`occurredAt`, `sequence`) are server-populated — agents do not get to\nchoose their own causality.",
+            "properties": {
+                "actorId": {
+                    "description": "Stable identifier of the actor doing the fucking-around. Consequences are\npartitioned by this value and never rebalance to another actor.",
+                    "title": "actorId",
+                    "type": "string"
+                },
+                "category": {
+                    "$ref": "#/definitions/FafoCategory",
+                    "title": "category"
+                },
+                "description": {
+                    "description": "What, precisely, you are about to do. Be honest. The log is forever.",
+                    "maxLength": 512,
+                    "title": "description",
+                    "type": "string"
+                },
+                "recklessness": {
+                    "description": "Self-assessed recklessness. The scale goes to eleven. The Bureau\nrecalibrates self-assessments upward by a factor derived from the phrase\n\"how hard can it be\" appearing in `description`.",
+                    "maximum": 11,
+                    "minimum": 0,
+                    "title": "recklessness",
+                    "type": "integer"
+                },
+                "safeguardsClaimed": {
+                    "description": "Safeguards the actor believes are in place. Recorded verbatim for\ncomedic value during the retro. Ignored by the severity engine.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "safeguardsClaimed",
+                    "type": "array"
+                },
+                "warningsDisregarded": {
+                    "default": 0,
+                    "description": "Warnings already received and ignored before declaring.",
+                    "minimum": 0,
+                    "title": "warningsDisregarded",
+                    "type": "integer"
+                },
+                "witnesses": {
+                    "description": "Actors or channels who will receive ToldYouSo broadcasts.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "witnesses",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "actorId",
+                "category",
+                "description",
+                "recklessness"
+            ],
+            "type": "object"
+        },
+        "FuckAroundOutput": {
+            "additionalProperties": false,
+            "description": "Result of `fuck_around`. Returned immediately (B3): the consequence itself\narrives later on `fafo://findout/{actorId}`, correlated by `_meta.fafoId`.",
+            "properties": {
+                "fafoId": {
+                    "description": "The Thread of Causality. Links every event in a single\naround → warning → escalation → findout → lesson lifecycle.\nAssigned by the fabric at intent declaration; immutable thereafter.",
+                    "format": "uuid",
+                    "title": "fafoId",
+                    "type": "string"
+                },
+                "predictedSeverity": {
+                    "description": "The Bureau's forecast. MUST be shown even when the user approved without reading.",
+                    "title": "predictedSeverity",
+                    "type": "number"
+                },
+                "status": {
+                    "const": "consequences_pending",
+                    "title": "status",
+                    "type": "string"
+                },
+                "warningsIssued": {
+                    "description": "Warnings issued in response to this declaration.",
+                    "minimum": 0,
+                    "title": "warningsIssued",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "fafoId",
+                "status"
+            ],
+            "type": "object"
+        },
+        "Intent": {
+            "additionalProperties": false,
+            "description": "A declaration of imminent fucking-around.\nMirror of `asyncapi.yaml#/components/schemas/Intent`.",
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/FafoCategory",
+                    "title": "category"
+                },
+                "description": {
+                    "description": "What, precisely, you are about to do. Be honest. The log is forever.",
+                    "maxLength": 512,
+                    "title": "description",
+                    "type": "string"
+                },
+                "recklessness": {
+                    "description": "Self-assessed recklessness. The scale goes to eleven. The Bureau\nrecalibrates self-assessments upward by a factor derived from the phrase\n\"how hard can it be\" appearing in `description`.",
+                    "maximum": 11,
+                    "minimum": 0,
+                    "title": "recklessness",
+                    "type": "integer"
+                },
+                "safeguardsClaimed": {
+                    "description": "Safeguards the actor believes are in place. Recorded verbatim for\ncomedic value during the retro. Ignored by the severity engine.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "safeguardsClaimed",
+                    "type": "array"
+                },
+                "warningsDisregarded": {
+                    "default": 0,
+                    "description": "Warnings already received and ignored before declaring.",
+                    "minimum": 0,
+                    "title": "warningsDisregarded",
+                    "type": "integer"
+                },
+                "witnesses": {
+                    "description": "Actors or channels who will receive ToldYouSo broadcasts.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "witnesses",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "category",
+                "description",
+                "recklessness"
+            ],
+            "type": "object"
+        },
+        "Lesson": {
+            "additionalProperties": false,
+            "description": "A self-reported learning outcome.\nMirror of `asyncapi.yaml#/components/schemas/Lesson`.",
+            "properties": {
+                "durable": {
+                    "description": "Whether the lesson is expected to survive the next opportunity.",
+                    "title": "durable",
+                    "type": "boolean"
+                },
+                "learned": {
+                    "title": "learned",
+                    "type": "boolean"
+                },
+                "notes": {
+                    "title": "notes",
+                    "type": "string"
+                },
+                "willDoItAgainAnyway": {
+                    "description": "The honesty field. Feeds the Recidivism Index.",
+                    "title": "willDoItAgainAnyway",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "learned"
+            ],
+            "type": "object"
+        },
+        "RecordLessonInput": {
+            "additionalProperties": false,
+            "description": "Input for `record_lesson` ← `asyncapi.yaml#/operations/recordLesson`.",
+            "properties": {
+                "actorId": {
+                    "description": "Stable identifier of the actor doing the fucking-around. Consequences are\npartitioned by this value and never rebalance to another actor.",
+                    "title": "actorId",
+                    "type": "string"
+                },
+                "durable": {
+                    "description": "Whether the lesson is expected to survive the next opportunity.",
+                    "title": "durable",
+                    "type": "boolean"
+                },
+                "fafoId": {
+                    "description": "The concluded causal thread this lesson pertains to.",
+                    "format": "uuid",
+                    "title": "fafoId",
+                    "type": "string"
+                },
+                "learned": {
+                    "title": "learned",
+                    "type": "boolean"
+                },
+                "notes": {
+                    "title": "notes",
+                    "type": "string"
+                },
+                "willDoItAgainAnyway": {
+                    "description": "The honesty field. Feeds the Recidivism Index.",
+                    "title": "willDoItAgainAnyway",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "actorId",
+                "fafoId",
+                "learned"
+            ],
+            "type": "object"
+        },
+        "RecordLessonOutput": {
+            "additionalProperties": false,
+            "description": "Result of `record_lesson`. The Bureau correlates; the server does not editorialize.",
+            "properties": {
+                "recidivismIndex": {
+                    "description": "The actor's updated Recidivism Index, 0–1. Computed, never self-reported.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "recidivismIndex",
+                    "type": "number"
+                },
+                "recorded": {
+                    "const": true,
+                    "title": "recorded",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "recidivismIndex",
+                "recorded"
+            ],
+            "type": "object"
+        },
+        "ToldYouSoInput": {
+            "additionalProperties": false,
+            "description": "Input for `told_you_so` — the FOAAS memorial tool. Exactly the two\nparameters the ancestral `/off/:name/:from` took. A closed, perfect form.",
+            "properties": {
+                "from": {
+                    "description": "Who told them so.",
+                    "title": "from",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Who is being told.",
+                    "title": "name",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "from",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ToldYouSoOutput": {
+            "$ref": "#/definitions/FoaasMessage",
+            "description": "The ancestral FOAAS wire format, preserved byte-for-byte in spirit.\nEvery consequence, no matter how severe, can be expressed as a `message`\nand a `subtitle`. That was FOAAS's great insight. This interface is FROZEN\nin homage — changes require a séance with the FOAAS maintainers.\nMirror of `asyncapi.yaml#/components/schemas/FoaasMessage`."
+        },
+        "Warning": {
+            "additionalProperties": false,
+            "description": "An advisory event. Structurally incapable of preventing anything.\nMirror of `asyncapi.yaml#/components/schemas/Warning`.",
+            "properties": {
+                "heeded": {
+                    "const": false,
+                    "description": "Whether the warning was heeded. A boolean for schema hygiene and a\nconstant for historical accuracy.",
+                    "title": "heeded",
+                    "type": "boolean"
+                },
+                "predictedSeverity": {
+                    "description": "The Bureau's forecast of the eventual finding-out.",
+                    "minimum": 0,
+                    "title": "predictedSeverity",
+                    "type": "number"
+                },
+                "source": {
+                    "description": "Where the warning came from. All sources are equally ignorable.",
+                    "enum": [
+                        "clearly_posted_sign",
+                        "compiler",
+                        "documentation",
+                        "friend",
+                        "linter",
+                        "mother",
+                        "past_self",
+                        "senior_engineer",
+                        "terms_of_service",
+                        "this_very_spec"
+                    ],
+                    "title": "source",
+                    "type": "string"
+                },
+                "text": {
+                    "title": "text",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "source",
+                "text"
+            ],
+            "type": "object"
+        }
+    }
+}
+
