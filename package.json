@@ -1,0 +1,25 @@
+{
+  "name": "fafoaas",
+  "version": "1.0.0",
+  "description": "FAFO as a Service — event-driven reimagining of FOAAS. Specs only; consequences eventual.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "generate": "node node_modules/typescript-json-schema/bin/typescript-json-schema tsconfig.schema.json '*' --required --noExtraProps --titles -o spec/mcp/schema.json",
+    "check:b5": "node scripts/check-b5-drift.mjs",
+    "validate": "./scripts/validate.sh",
+    "codegen": "./scripts/codegen.sh",
+    "test:mutation": "tsx scripts/mutation-test.mts"
+  },
+  "license": "WTFPL",
+  "type": "module",
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@types/node": "^26.1.0",
+    "js-yaml": "^5.2.1",
+    "quicktype": "^23.2.6",
+    "tsx": "^4.22.5",
+    "typescript": "^6.0.3",
+    "typescript-json-schema": "^0.67.4"
+  },
+  "private": true
+}
