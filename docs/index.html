@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAFOaaS — Consequences as a Service | Fuck Around, Find Out at Scale</title>
+<meta name="description" content="The world's first Consequences-as-a-Service platform. A pitch-perfect Silicon Valley parody built on real engineering: AsyncAPI + MCP specs, polyglot codegen, contract tests, 98/98 mutation score.">
+<link rel="canonical" href="https://copyleftdev.github.io/fafoaas/">
+<meta name="theme-color" content="#171310">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FAFOaaS">
+<meta property="og:title" content="FAFOaaS — Consequences as a Service">
+<meta property="og:description" content="Fuck around. Find out. At scale. The inevitability platform — a Silicon Valley parody with a 98/98 mutation score underneath.">
+<meta property="og:url" content="https://copyleftdev.github.io/fafoaas/">
+<meta property="og:image" content="https://copyleftdev.github.io/fafoaas/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FAFOaaS — Fuck around. Find out. At scale. The world's first Consequences-as-a-Service platform.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FAFOaaS — Consequences as a Service">
+<meta name="twitter:description" content="Fuck around. Find out. At scale. Every metric on this page is real, which is more than most decks can say.">
+<meta name="twitter:image" content="https://copyleftdev.github.io/fafoaas/og.png">
+
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%23171310"/><text x="32" y="46" font-family="Georgia,serif" font-size="40" font-weight="bold" fill="%23e8552e" text-anchor="middle">F!</text></svg>'>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Martian+Mono:wght@400;700&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://copyleftdev.github.io/fafoaas/#website",
+      "url": "https://copyleftdev.github.io/fafoaas/",
+      "name": "FAFOaaS — Consequences as a Service",
+      "description": "The world's first Consequences-as-a-Service platform. A Silicon Valley parody built on real spec-first engineering.",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://copyleftdev.github.io/fafoaas/#code",
+      "name": "FAFOaaS",
+      "description": "An event-driven homage to FOAAS and a working masterclass in specification-first engineering: AsyncAPI 3 + MCP specs, polyglot code generation, spec-derived contract tests, a generated conformant MCP server, and mutation testing (98/98 killed).",
+      "codeRepository": "https://github.com/copyleftdev/fafoaas",
+      "programmingLanguage": ["TypeScript", "Go", "Python", "YAML"],
+      "license": "http://www.wtfpl.net/",
+      "keywords": "asyncapi, mcp, model context protocol, spec-first, contract testing, mutation testing, code generation, foaas, fafo",
+      "author": { "@type": "Person", "name": "copyleftdev", "url": "https://github.com/copyleftdev" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://copyleftdev.github.io/fafoaas/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I unsubscribe from consequences?",
+          "acceptedAnswer": { "@type": "Answer", "text": "You can stop listening. The protocol requires that we let you pretend. It is not the same thing." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is your SLA?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Eventually™. In the entire history of the platform, this SLA has never once been breached." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is FAFOaaS real?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The product category is a joke. The repository is real: two formal specifications, three generated clients, a conformant MCP server, and a 98/98 mutation score. The marketing is the parody. The engineering is not." }
+        },
+        {
+          "@type": "Question",
+          "name": "How is this different from just living?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Living lacks correlation IDs, at-least-once delivery semantics, and a term sheet. We provide the missing enterprise layer." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer a staging environment?",
+          "acceptedAnswer": { "@type": "Answer", "text": "There is no staging environment. See Law 7. You are on production right now." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you SOC 2 compliant?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We are SOC-2 of the Soul. The auditors wept, then subscribed." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --bg: oklch(17% 0.012 45);
+    --bg-raised: oklch(20% 0.014 45);
+    --bg-well: oklch(14.5% 0.011 45);
+    --ink: oklch(93% 0.014 80);
+    --ink-soft: oklch(76% 0.02 70);
+    --ink-faint: oklch(58% 0.018 60);
+    --brass: oklch(76% 0.085 85);
+    --brass-dim: oklch(48% 0.05 85);
+    --hazard: oklch(63% 0.19 34);
+    --hazard-deep: oklch(50% 0.16 34);
+    --rule: oklch(30% 0.02 60);
+    --rule-soft: oklch(25% 0.016 55);
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1.5rem;
+    --space-lg: 3rem;
+    --space-xl: clamp(4rem, 9vw, 8rem);
+    --serif: "Gloock", Georgia, serif;
+    --sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --mono: "Martian Mono", ui-monospace, monospace;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --measure: 62ch;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--hazard); color: oklch(15% 0.02 45); }
+
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--hazard); color: oklch(15% 0.02 45); padding: 0.5rem 1rem; z-index: 99; }
+  .skip:focus { left: 0; }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--hazard); outline-offset: 3px; border-radius: 2px;
+  }
+
+  .wrap { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 3rem); }
+
+  /* ---------- banner ---------- */
+  .banner {
+    background: var(--hazard-deep);
+    color: oklch(96% 0.02 80);
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+    text-align: center; padding: 0.55rem 1rem;
+  }
+  .banner strong { color: oklch(99% 0.01 80); font-weight: 700; }
+
+  /* ---------- nav ---------- */
+  header.site { border-bottom: 1px solid var(--rule-soft); }
+  .nav { display: flex; align-items: baseline; gap: var(--space-md); padding-block: 1.1rem; }
+  .wordmark { font-family: var(--serif); font-size: 1.45rem; letter-spacing: 0.01em; text-decoration: none; }
+  .wordmark span { color: var(--hazard); }
+  .nav nav { margin-left: auto; display: flex; gap: 1.4rem; font-size: 0.85rem; }
+  .nav nav a { text-decoration: none; color: var(--ink-soft); }
+  .nav nav a:hover { color: var(--ink); }
+  .nav .cta { color: var(--brass); border-bottom: 1px solid var(--brass-dim); padding-bottom: 1px; }
+  @media (max-width: 40rem) { .nav nav a:not(.cta):not(.gh) { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding-block: var(--space-xl) calc(var(--space-xl) * 0.6); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.72rem; font-weight: 400;
+    letter-spacing: 0.34em; text-transform: uppercase; color: var(--brass);
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.9rem, 9.5vw, 7.25rem);
+    line-height: 1.02; letter-spacing: -0.01em;
+    margin-top: var(--space-md); max-width: 20ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--hazard); }
+  .hero .sub {
+    max-width: var(--measure); color: var(--ink-soft);
+    font-size: clamp(1.05rem, 1.7vw, 1.25rem);
+    margin-top: var(--space-lg);
+  }
+  .hero .sub strong { color: var(--ink); font-weight: 500; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: var(--space-lg); }
+  .btn {
+    display: inline-block; text-decoration: none;
+    font-family: var(--sans); font-weight: 700; font-size: 0.95rem;
+    padding: 0.9rem 1.6rem; border-radius: 3px;
+    transition: transform 0.35s var(--ease-out), background 0.35s var(--ease-out);
+  }
+  .btn-primary { background: var(--hazard); color: oklch(15% 0.02 45); }
+  .btn-primary:hover { background: oklch(68% 0.2 34); transform: translateY(-2px); }
+  .btn-ghost { color: var(--ink); border: 1px solid var(--rule); }
+  .btn-ghost:hover { border-color: var(--brass-dim); color: var(--brass); }
+  .fine {
+    font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint);
+    margin-top: var(--space-md); letter-spacing: 0.03em; max-width: 60ch;
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker-shell { border-block: 1px solid var(--rule-soft); overflow: hidden; background: var(--bg-well); }
+  .ticker { display: flex; gap: 0; width: max-content; animation: scroll 52s linear infinite; }
+  .ticker:hover { animation-play-state: paused; }
+  .ticker span {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint);
+    padding: 0.8rem 0; white-space: nowrap;
+  }
+  .ticker span::after { content: "·"; color: var(--hazard); margin-inline: 1.6rem; }
+  .ticker b { color: var(--ink-soft); font-weight: 400; }
+  .ticker .sev { color: var(--hazard); }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* ---------- logo strip ---------- */
+  .logos { padding-block: var(--space-lg); }
+  .logos p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-faint); }
+  .logos ul {
+    list-style: none; padding: 0; display: flex; flex-wrap: wrap;
+    gap: 1rem 3rem; margin-top: var(--space-md); align-items: baseline;
+  }
+  .logos li { font-family: var(--serif); font-size: 1.25rem; color: var(--ink-faint); }
+  .logos li small { font-family: var(--mono); font-size: 0.6rem; color: var(--brass-dim); display: block; letter-spacing: 0.1em; }
+
+  /* ---------- sections ---------- */
+  section.block { padding-block: var(--space-xl); border-top: 1px solid var(--rule-soft); }
+  .kicker { display: flex; align-items: baseline; gap: 1rem; }
+  .kicker .no { font-family: var(--mono); font-size: 0.72rem; color: var(--hazard); letter-spacing: 0.1em; }
+  .kicker .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brass); }
+  section.block h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.9rem, 4.4vw, 3.4rem); line-height: 1.08;
+    max-width: 24ch; margin-top: var(--space-md);
+  }
+  .lede { max-width: var(--measure); color: var(--ink-soft); margin-top: var(--space-md); }
+  .lede + .lede { margin-top: 1rem; }
+  .lede strong { color: var(--ink); font-weight: 500; }
+
+  /* two-col editorial */
+  .cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-lg); align-items: start; }
+  @media (max-width: 56rem) { .cols { grid-template-columns: 1fr; } }
+
+  /* feature ledger */
+  .ledger { list-style: none; padding: 0; margin-top: var(--space-lg); }
+  .ledger li {
+    display: grid; grid-template-columns: 3.5rem minmax(0, 17rem) 1fr;
+    gap: 1.25rem; padding-block: 1.4rem;
+    border-top: 1px solid var(--rule-soft); align-items: baseline;
+  }
+  .ledger li:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .ledger .n { font-family: var(--mono); font-size: 0.7rem; color: var(--brass-dim); }
+  .ledger h3 { font-family: var(--serif); font-weight: 400; font-size: 1.3rem; }
+  .ledger p { color: var(--ink-soft); font-size: 0.95rem; max-width: 52ch; }
+  @media (max-width: 48rem) {
+    .ledger li { grid-template-columns: 3rem 1fr; }
+    .ledger p { grid-column: 2; }
+  }
+
+  /* traction */
+  .traction { list-style: none; padding: 0; margin-top: var(--space-lg); }
+  .traction li {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    padding-block: 1.1rem; border-top: 1px solid var(--rule-soft);
+  }
+  .traction li:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .traction .num {
+    font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    min-width: 7.5ch; color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  .traction .what { color: var(--ink-soft); }
+  .traction .verify { margin-left: auto; font-family: var(--mono); font-size: 0.65rem; color: var(--brass-dim); letter-spacing: 0.06em; white-space: nowrap; }
+  @media (max-width: 44rem) { .traction .verify { display: none; } }
+
+  /* testimonials */
+  .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: var(--space-lg); margin-top: var(--space-lg); }
+  .quotes figure { padding: 0; }
+  .quotes blockquote {
+    font-family: var(--serif); font-size: clamp(1.25rem, 2vw, 1.6rem);
+    line-height: 1.3; text-indent: -0.45em;
+  }
+  .quotes blockquote::before { content: "“"; color: var(--hazard); }
+  .quotes blockquote::after { content: "”"; color: var(--hazard); }
+  .quotes figcaption { margin-top: var(--space-sm); font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.05em; }
+
+  /* pricing */
+  .sheet { width: 100%; border-collapse: collapse; margin-top: var(--space-lg); font-size: 0.92rem; }
+  .sheet caption { text-align: left; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.08em; margin-bottom: var(--space-sm); }
+  .sheet th, .sheet td { padding: 0.9rem 1rem; text-align: left; border: 1px solid var(--rule-soft); vertical-align: top; }
+  .sheet thead th { background: var(--bg-raised); font-family: var(--serif); font-weight: 400; font-size: 1.15rem; }
+  .sheet thead .price { display: block; font-family: var(--mono); font-size: 0.68rem; color: var(--brass); margin-top: 0.3rem; letter-spacing: 0.05em; }
+  .sheet tbody th { font-weight: 500; color: var(--ink-soft); font-size: 0.85rem; width: 22%; }
+  .sheet td { color: var(--ink-soft); }
+  .sheet td b { color: var(--ink); font-weight: 500; }
+  .sheet .no { color: var(--hazard); font-family: var(--mono); }
+  .sheet-note { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faint); margin-top: var(--space-md); max-width: 70ch; letter-spacing: 0.02em; }
+  .sheet-scroll { overflow-x: auto; }
+
+  /* disclosure */
+  .disclosure { background: var(--bg-well); }
+  .disclosure .lede { color: var(--ink-soft); }
+  .repo-line {
+    display: block; margin-top: var(--space-lg); padding: 1.1rem 1.3rem;
+    background: var(--bg-raised); border: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 0.78rem; color: var(--brass);
+    overflow-x: auto; white-space: nowrap; border-radius: 3px;
+  }
+  .repo-line span { color: var(--ink-faint); user-select: none; }
+  .doc-links { margin-top: var(--space-md); display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.9rem; }
+  .doc-links a { color: var(--brass); text-underline-offset: 3px; }
+
+  /* FAQ */
+  .faq { margin-top: var(--space-lg); }
+  .faq details { border-top: 1px solid var(--rule-soft); }
+  .faq details:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .faq summary {
+    cursor: pointer; list-style: none; padding-block: 1.3rem;
+    font-family: var(--serif); font-size: 1.25rem;
+    display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--mono); color: var(--hazard); transition: transform 0.3s var(--ease-out); }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .a { padding-bottom: 1.3rem; color: var(--ink-soft); max-width: var(--measure); }
+
+  /* final CTA */
+  .final { text-align: center; padding-block: var(--space-xl); }
+  .final h2 { max-width: none; font-size: clamp(2.6rem, 8vw, 6rem); }
+  .final .cta-row { justify-content: center; }
+
+  footer.site {
+    border-top: 1px solid var(--rule-soft); padding-block: var(--space-lg);
+    color: var(--ink-faint); font-size: 0.85rem;
+  }
+  footer.site .cols { align-items: baseline; }
+  footer.site a { color: var(--ink-soft); text-underline-offset: 3px; }
+  footer.site .legal { font-family: var(--mono); font-size: 0.65rem; margin-top: var(--space-md); letter-spacing: 0.04em; }
+
+  /* reveals */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .ticker { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .btn { transition: none; }
+  }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="banner" role="note">SERIES ∞ &nbsp;·&nbsp; We are post-revenue, pre-consequence. <strong>The round is always open.</strong></div>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="wordmark" href="#">FAFO<span>aaS</span></a>
+    <nav aria-label="Primary">
+      <a href="#platform">Platform</a>
+      <a href="#traction">Numbers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#disclosure">Disclosure</a>
+      <a class="gh" href="https://github.com/copyleftdev/fafoaas">GitHub</a>
+      <a class="cta" href="#cta">Book a findout</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero wrap" aria-labelledby="hero-h">
+    <p class="eyebrow reveal">Consequences as a Service</p>
+    <h1 id="hero-h" class="reveal">Fuck around.<br>Find out. <em>At&nbsp;scale.</em></h1>
+    <p class="sub reveal">FAFOaaS is the world's first Consequences-as-a-Service platform. We didn't create a category — we noticed the one that has governed <strong>every decision since the beginning of time</strong>, and put an API on it.</p>
+    <div class="cta-row reveal">
+      <a class="btn btn-primary" href="https://github.com/copyleftdev/fafoaas">Start fucking around — it's free</a>
+      <a class="btn btn-ghost" href="https://github.com/copyleftdev/fafoaas/blob/main/spec/asyncapi.yaml">Read the specification</a>
+    </div>
+    <p class="fine reveal">Free tier includes unlimited consequences. All tiers include unlimited consequences. This is not configurable.</p>
+  </section>
+
+  <div class="ticker-shell" aria-hidden="true">
+    <div class="ticker" id="ticker">
+      <span><b>dave</b> declared intent — production_deploy — recklessness <b class="sev">9</b> — Friday 16:55</span>
+      <span>warning issued — source: <b>compiler</b> — heeded: <b class="sev">false</b></span>
+      <span>escalation acknowledged — <b>recalculating integral</b></span>
+      <span>consequence materialized — severity <b class="sev">9.7</b> — proportional — <b>dave found out</b></span>
+      <span>toldyouso broadcast — <b>“- The compiler, three weeks ago”</b></span>
+      <span>lesson recorded — willDoItAgainAnyway: <b class="sev">true</b></span>
+      <span>unclaimed consequence <b>accruing interest</b> — inherited by on-call</span>
+      <span><b>the-intern</b> declared intent — unsupervised_sudo — recklessness <b class="sev">11</b></span>
+      <span>consequence materialized — severity <b class="sev">14.2</b> — <b>disproportionate</b></span>
+      <span>warning issued — source: <b>clearly_posted_sign</b> — heeded: <b class="sev">false</b></span>
+    </div>
+  </div>
+  <p class="sr">A live feed of consequence events: intents declared, warnings ignored, consequences materialized. All of them, eventually.</p>
+
+  <section class="logos wrap" aria-label="Customers">
+    <p>Trusted by everyone, eventually</p>
+    <ul>
+      <li>Entropy Partners</li>
+      <li>The House <small>EST. ALWAYS · UNDEFEATED</small></li>
+      <li>Murphy &amp; Associates</li>
+      <li>Your Past Decisions</li>
+      <li>Gravity</li>
+      <li>The Compiler</li>
+    </ul>
+  </section>
+
+  <section class="block wrap reveal" id="category" aria-labelledby="h-category">
+    <div class="kicker"><span class="no">01</span><span class="label">The Category</span></div>
+    <h2 id="h-category">We didn't invent consequences. We productized them.</h2>
+    <div class="cols" style="margin-top: var(--space-lg)">
+      <p class="lede">For all of recorded history, finding out has been fragmented, artisanal, and on-premise. Every family, every team, every founder — running a bespoke consequence stack with no SLAs, no observability, and no correlation IDs.</p>
+      <div>
+        <p class="lede">FAFOaaS unifies the entire causality lifecycle — intent, warning, escalation, consequence, lesson — behind one formally-specified contract. <strong>The TAM is every decision ever made.</strong> We modeled it in a spreadsheet, and the spreadsheet found out.</p>
+        <p class="lede">Analysts have called the space "inevitable." We agree. That's the product.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap reveal" id="platform" aria-labelledby="h-platform">
+    <div class="kicker"><span class="no">02</span><span class="label">The Platform</span></div>
+    <h2 id="h-platform">Enterprise-grade inevitability, from day&nbsp;zero.</h2>
+    <ul class="ledger">
+      <li>
+        <span class="n">02.1</span>
+        <h3>At-Least-Once™ Delivery</h3>
+        <p>Consequences may arrive more than once. The universe retries. Unlike our competitors, we put this in the contract.</p>
+      </li>
+      <li>
+        <span class="n">02.2</span>
+        <h3>Zero-Trust Warnings</h3>
+        <p>Warnings are issued with full provenance and ignored universally. <code>heeded: false</code> is enforced at the schema level. That's governance.</p>
+      </li>
+      <li>
+        <span class="n">02.3</span>
+        <h3>Web-Scale Regret</h3>
+        <p>Consequences are partitioned by actor and never rebalance to someone else, no matter how the group is configured. True multi-tenancy, finally.</p>
+      </li>
+      <li>
+        <span class="n">02.4</span>
+        <h3>AI-Native Causality</h3>
+        <p>We are AI-native the way gravity is falling-native. Ships with an MCP server so your agents can fuck around programmatically.</p>
+      </li>
+      <li>
+        <span class="n">02.5</span>
+        <h3>Infinite Retention</h3>
+        <p>The findout log is immutable and retained forever. The internet already remembered — now it's compliant.</p>
+      </li>
+      <li>
+        <span class="n">02.6</span>
+        <h3>No Staging Environment</h3>
+        <p>We deploy directly to reality. Always have. So do you — we're just the first vendor honest enough to put it in the SLA.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block wrap reveal" id="traction" aria-labelledby="h-traction">
+    <div class="kicker"><span class="no">03</span><span class="label">Traction</span></div>
+    <h2 id="h-traction">The numbers. Real ones — ask any other deck.</h2>
+    <ul class="traction">
+      <li><span class="num" data-count="98">0</span><span class="what">of 98 injected mutants killed — clients, specs, and server</span><span class="verify">npm run test:mutation</span></li>
+      <li><span class="num" data-count="14">0</span><span class="what">of 14 live MCP server conformance checks passing</span><span class="verify">server.test.ts</span></li>
+      <li><span class="num" data-count="57">0</span><span class="what">contract-test vectors derived from the spec itself</span><span class="verify">vectors.json</span></li>
+      <li><span class="num" data-count="3">0</span><span class="what">generated clients — Go, Python, TypeScript — from one command</span><span class="verify">npm run codegen</span></li>
+      <li><span class="num" data-count="7">0</span><span class="what">Laws of FAFO, normative, machine-enforced</span><span class="verify">spec/asyncapi.yaml</span></li>
+      <li><span class="num" data-count="0">0</span><span class="what">cloud CI minutes consumed. Ever. There is no staging environment.</span><span class="verify">your own machine</span></li>
+    </ul>
+    <p class="sheet-note">Every figure on this page is reproducible from source. This makes us an outlier in the category, and frankly, in the industry.</p>
+  </section>
+
+  <section class="block wrap reveal" id="love" aria-labelledby="h-love">
+    <div class="kicker"><span class="no">04</span><span class="label">Customer Love</span></div>
+    <h2 id="h-love">Don't take our word for it. Take theirs. They found out.</h2>
+    <div class="quotes">
+      <figure>
+        <blockquote>Told you so.</blockquote>
+        <figcaption>— THE COMPILER · three weeks prior</figcaption>
+      </figure>
+      <figure>
+        <blockquote>We disregarded every warning, and the platform still delivered. At least once.</blockquote>
+        <figcaption>— CTO · stealth Series B</figcaption>
+      </figure>
+      <figure>
+        <blockquote>FAFOaaS 10×'d our findout velocity. We now learn nothing, much faster.</blockquote>
+        <figcaption>— DAVE · actor #0001</figcaption>
+      </figure>
+      <figure>
+        <blockquote>He never listens.</blockquote>
+        <figcaption>— DAVE'S MOTHER · advisor, unheeded</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block wrap reveal" id="pricing" aria-labelledby="h-pricing">
+    <div class="kicker"><span class="no">05</span><span class="label">Pricing</span></div>
+    <h2 id="h-pricing">Simple, transparent, inescapable.</h2>
+    <div class="sheet-scroll">
+    <table class="sheet">
+      <caption>TERM SHEET · ALL TIERS FINAL · CONSEQUENCES INCLUDED BY LAW 1</caption>
+      <thead>
+        <tr>
+          <td></td>
+          <th scope="col">Fuck Around<span class="price">$0 · forever</span></th>
+          <th scope="col">Find Out<span class="price">$11/mo · this tier goes to eleven</span></th>
+          <th scope="col">Biblical<span class="price">contact the Bureau</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Intents</th><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><th scope="row">Consequences</th><td><b>Included</b></td><td><b>Included</b></td><td><b>Included</b>, proportionality up to biblical</td></tr>
+        <tr><th scope="row">Warnings</th><td>Issued &amp; ignored</td><td>Issued &amp; ignored</td><td>Hand-written, still ignored</td></tr>
+        <tr><th scope="row">SLA</th><td>Eventually™</td><td>Eventually™, prioritized</td><td>Eventually™, notarized</td></tr>
+        <tr><th scope="row">Correlation</th><td>fafoId</td><td>fafoId</td><td>fafoId, engraved</td></tr>
+        <tr><th scope="row">Unsubscribe from consequences</th><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sheet-note">No tier can exclude consequences. Requesting <code>fafo:around</code> without <code>fafo:findout</code> is the canonical example of not understanding the product.</p>
+  </section>
+
+  <section class="block wrap reveal" id="investors" aria-labelledby="h-investors">
+    <div class="kicker"><span class="no">06</span><span class="label">Our Investors</span></div>
+    <h2 id="h-investors">Backed by the patient capital of cause and effect.</h2>
+    <div class="quotes">
+      <figure>
+        <blockquote>Founder-market fit is off the charts. The founders have been fucking around for years.</blockquote>
+        <figcaption>— GENERAL PARTNER · Entropy Partners</figcaption>
+      </figure>
+      <figure>
+        <blockquote>We passed on the seed round. Then we found out.</blockquote>
+        <figcaption>— A FUND · which has asked to remain nameless</figcaption>
+      </figure>
+      <figure>
+        <blockquote>The only portfolio company whose SLA has never been breached.</blockquote>
+        <figcaption>— INEVITABILITY CAPITAL · Series ∞ lead</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block disclosure reveal" id="disclosure" aria-labelledby="h-disclosure">
+    <div class="wrap">
+      <div class="kicker"><span class="no">07</span><span class="label">Required Disclosure</span></div>
+      <h2 id="h-disclosure">The part that isn't a joke.</h2>
+      <p class="lede">Beneath this page sits a complete, working exercise in specification-first engineering: <strong>two formal specs</strong> (an AsyncAPI 3.0 event contract and a TypeScript-first MCP spec, structured like the official one), a <strong>five-stage validation gate</strong> with cross-spec drift detection, <strong>deterministic polyglot codegen</strong> (Go, Python, TypeScript), <strong>contract tests derived from the spec's own examples</strong>, a <strong>generated MCP server</strong> that passes 14 live conformance checks, and <strong>mutation testing</strong> that kills all 98 injected defects.</p>
+      <p class="lede">The marketing above is a parody. The engineering below it is not. <strong>That is the joke</strong> — and the repository doubles as a study guide, seven chapters long, with exercises.</p>
+      <code class="repo-line"><span>$ </span>claude mcp add fafo -- npx tsx gen/typescript/fafo-server/server.ts</code>
+      <div class="doc-links">
+        <a href="https://github.com/copyleftdev/fafoaas">The repository</a>
+        <a href="https://github.com/copyleftdev/fafoaas#the-study-guide">The curriculum</a>
+        <a href="https://github.com/copyleftdev/fafoaas/blob/main/spec/mcp/FAFO-MCP.md">FAFO-MCP spec</a>
+        <a href="https://github.com/tomdionysus/foaas">In memory of FOAAS</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap reveal" id="faq" aria-labelledby="h-faq">
+    <div class="kicker"><span class="no">08</span><span class="label">FAQ</span></div>
+    <h2 id="h-faq">Questions, frequently asked. Answers, rarely heeded.</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I unsubscribe from consequences?</summary>
+        <p class="a">You can stop listening. The protocol requires that we let you pretend. It is not the same thing.</p>
+      </details>
+      <details>
+        <summary>What is your SLA?</summary>
+        <p class="a">Eventually™. In the entire history of the platform, this SLA has never once been breached.</p>
+      </details>
+      <details>
+        <summary>Is FAFOaaS real?</summary>
+        <p class="a">The product category is a joke. The repository is real: two formal specifications, three generated clients, a conformant MCP server, and a 98/98 mutation score. The marketing is the parody. The engineering is not.</p>
+      </details>
+      <details>
+        <summary>How is this different from just… living?</summary>
+        <p class="a">Living lacks correlation IDs, at-least-once delivery semantics, and a term sheet. We provide the missing enterprise layer.</p>
+      </details>
+      <details>
+        <summary>Do you offer a staging environment?</summary>
+        <p class="a">There is no staging environment. See Law 7. You are on production right now.</p>
+      </details>
+      <details>
+        <summary>Are you SOC 2 compliant?</summary>
+        <p class="a">We are SOC-2 of the Soul. The auditors wept, then subscribed.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="final wrap reveal" id="cta" aria-labelledby="h-final">
+    <p class="eyebrow">No demo required. No demo possible.</p>
+    <h2 id="h-final">You were going to anyway.</h2>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/copyleftdev/fafoaas">Fuck around →</a>
+      <a class="btn btn-ghost" href="https://github.com/copyleftdev/fafoaas#exercises-fuck-around-and-find-out-pedagogically">Find out (guided)</a>
+    </div>
+    <p class="fine" style="margin-inline:auto">By clicking either button you agree to the Laws of FAFO, which — and our counsel wants this to be very clear — were already in effect.</p>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <p>FAFO<span style="color:var(--hazard)">aaS</span> · The Bureau of Consequences<br>In loving memory of <a href="https://github.com/tomdionysus/foaas">FOAAS</a>, which told us off synchronously so that we might one day find out asynchronously.</p>
+      <p><a href="https://github.com/copyleftdev/fafoaas">GitHub</a> · <a href="https://github.com/copyleftdev/fafoaas/blob/main/spec/asyncapi.yaml">The Contract</a> · <a href="https://github.com/copyleftdev/fafoaas/blob/main/LICENSE">WTFPL</a> · <a href="https://github.com/copyleftdev/fafoaas#the-study-guide">Learn spec-first</a></p>
+    </div>
+    <p class="legal">© <span id="yr">2026</span> THE BUREAU OF CONSEQUENCES. ALL RIGHTS RESERVED. ALL CONSEQUENCES RETAINED. THERE IS NO STAGING ENVIRONMENT — YOU ARE ON IT.</p>
+  </div>
+</footer>
+
+<script>
+  // Seamless ticker: duplicate content once.
+  const ticker = document.getElementById("ticker");
+  ticker.innerHTML += ticker.innerHTML;
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Staggered reveals.
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    }
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach((el, i) => {
+    if (el.closest(".hero")) el.style.transitionDelay = `${i * 90}ms`;
+    io.observe(el);
+  });
+
+  // Ledger counters: count up when traction enters view.
+  const counters = document.querySelectorAll(".num[data-count]");
+  const cio = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      cio.unobserve(e.target);
+      const target = Number(e.target.dataset.count);
+      if (reduced || target === 0) { e.target.textContent = target; continue; }
+      const t0 = performance.now(), dur = 1200;
+      const tick = (t) => {
+        const p = Math.min(1, (t - t0) / dur);
+        e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 4)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  }, { threshold: 0.4 });
+  counters.forEach((c) => cio.observe(c));
+</script>
+</body>
+</html>

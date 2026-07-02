@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://copyleftdev.github.io/fafoaas/sitemap.xml
+
+# You may crawl. You may index. You will find out.
