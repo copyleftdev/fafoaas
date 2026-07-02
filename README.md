@@ -9,6 +9,8 @@
 ![validation](https://img.shields.io/badge/CI-your_own_machine-lightgrey)
 ![license](https://img.shields.io/badge/license-WTFPL-red)
 
+**The pitch:** [copyleftdev.github.io/fafoaas](https://copyleftdev.github.io/fafoaas/) — the landing page the category deserves.
+
 An event-driven reimagining of [FOAAS](https://github.com/tomdionysus/foaas),
 of blessed memory — and, beneath the jokes, a **complete, working masterclass
 in specification-first engineering**: two formal specs, a validation gate,
