@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FAFOaaS">
 <meta property="og:title" content="FAFOaaS — Consequences as a Service">
-<meta property="og:description" content="Fuck around. Find out. At scale. The inevitability platform — a Silicon Valley parody with a 98/98 mutation score underneath.">
+<meta property="og:description" content="Fuck around. Find out. At scale. The inevitability platform — now dogfooded by a fully agentic startup incident room with a 98/98 mutation score underneath.">
 <meta property="og:url" content="https://copyleftdev.github.io/fafoaas/">
 <meta property="og:image" content="https://copyleftdev.github.io/fafoaas/og.png">
 <meta property="og:image:width" content="1200">
@@ -392,6 +392,51 @@
   .traction .verify { margin-left: auto; font-family: var(--mono); font-size: 0.65rem; color: var(--brass-dim); letter-spacing: 0.06em; white-space: nowrap; }
   @media (max-width: 44rem) { .traction .verify { display: none; } }
 
+  /* field demo */
+  .demo-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(16rem, 5fr);
+    gap: var(--space-lg);
+    align-items: start;
+    margin-top: var(--space-lg);
+  }
+  .demo-frame {
+    border: 1px solid var(--rule);
+    background: var(--bg-well);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .demo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .demo-stats {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .demo-stats li {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+  .demo-stats b {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.55rem;
+    color: var(--hazard);
+    font-variant-numeric: tabular-nums;
+  }
+  .demo-stats span {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+  @media (max-width: 58rem) { .demo-grid { grid-template-columns: 1fr; } }
+
   /* testimonials */
   .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: var(--space-lg); margin-top: var(--space-lg); }
   .quotes figure { padding: 0; }
@@ -483,6 +528,7 @@
       <a href="#model">CFM‑1</a>
       <a href="#leadership">Leadership</a>
       <a href="#traction">Numbers</a>
+      <a href="#field-demo">Demo</a>
       <a href="#pricing">Pricing</a>
       <a href="#disclosure">Disclosure</a>
       <a class="gh" href="https://github.com/copyleftdev/fafoaas">GitHub</a>
@@ -685,14 +731,37 @@
       <li><span class="num" data-count="14">0</span><span class="what">of 14 live MCP server conformance checks passing</span><span class="verify">server.test.ts</span></li>
       <li><span class="num" data-count="57">0</span><span class="what">contract-test vectors derived from the spec itself</span><span class="verify">vectors.json</span></li>
       <li><span class="num" data-count="3">0</span><span class="what">generated clients — Go, Python, TypeScript — from one command</span><span class="verify">npm run codegen</span></li>
+      <li><span class="num" data-count="12">0</span><span class="what">agentic startup staff dogfooding the MCP server in one incident room</span><span class="verify">npm run dogfood:chaos</span></li>
       <li><span class="num" data-count="7">0</span><span class="what">Laws of FAFO, normative, machine-enforced</span><span class="verify">spec/asyncapi.yaml</span></li>
       <li><span class="num" data-count="0">0</span><span class="what">cloud CI minutes consumed. Ever. There is no staging environment.</span><span class="verify">your own machine</span></li>
     </ul>
     <p class="sheet-note">Every figure on this page is reproducible from source. This makes us an outlier in the category, and frankly, in the industry.</p>
   </section>
 
+  <section class="block wrap reveal" id="field-demo" aria-labelledby="h-field-demo">
+    <div class="kicker"><span class="no">06</span><span class="label">Field Demo</span></div>
+    <h2 id="h-field-demo">BurnRate AI found out so your agents don't have to. They will anyway.</h2>
+    <p class="lede">The dogfood harness runs the generated MCP server as a real protocol endpoint, then turns an agentic startup into a terminal incident room: subscriptions, destructive tools, escalations, deferred materialization, ledgers, lessons, and a final told-you-so from the compiler.</p>
+    <div class="demo-grid">
+      <figure class="demo-frame">
+        <img src="assets/demo/fafo-chaos.gif" alt="Animated terminal demo of BurnRate AI agentic staff finding out through FAFOaaS" width="979" height="739" loading="lazy">
+      </figure>
+      <div>
+        <ul class="demo-stats">
+          <li><b>12</b><span>staff agents in the chaos dogfood scenario</span></li>
+          <li><b>12</b><span>materialized consequences delivered over subscribed findout streams</span></li>
+          <li><b>5</b><span>biblical outcomes after executive-grade escalation</span></li>
+          <li><b>27</b><span>highest realized severity; the input scale still only goes to eleven</span></li>
+        </ul>
+        <code class="repo-line"><span>$ </span>npm run dogfood:chaos</code>
+        <code class="repo-line" style="margin-top:0.75rem"><span>$ </span>npm run demo:terminal</code>
+        <p class="sheet-note">The GIF is generated from an asciinema recording with <code>agg</code>. The demo is not a mockup; it is a polite transcript of the server doing exactly what the contract said it would do.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="block wrap reveal" id="love" aria-labelledby="h-love">
-    <div class="kicker"><span class="no">06</span><span class="label">Customer Love</span></div>
+    <div class="kicker"><span class="no">07</span><span class="label">Customer Love</span></div>
     <h2 id="h-love">Don't take our word for it. Take theirs. They found out.</h2>
     <div class="quotes">
       <figure>
@@ -715,7 +784,7 @@
   </section>
 
   <section class="block wrap reveal" id="pricing" aria-labelledby="h-pricing">
-    <div class="kicker"><span class="no">07</span><span class="label">Pricing</span></div>
+    <div class="kicker"><span class="no">08</span><span class="label">Pricing</span></div>
     <h2 id="h-pricing">Simple, transparent, inescapable.</h2>
     <div class="sheet-scroll">
     <table class="sheet">
@@ -743,7 +812,7 @@
   </section>
 
   <section class="block wrap reveal" id="investors" aria-labelledby="h-investors">
-    <div class="kicker"><span class="no">08</span><span class="label">Our Investors</span></div>
+    <div class="kicker"><span class="no">09</span><span class="label">Our Investors</span></div>
     <h2 id="h-investors">Backed by the patient capital of cause and effect.</h2>
     <div class="quotes">
       <figure>
@@ -763,14 +832,15 @@
 
   <section class="block disclosure reveal" id="disclosure" aria-labelledby="h-disclosure">
     <div class="wrap">
-      <div class="kicker"><span class="no">09</span><span class="label">Required Disclosure</span></div>
+      <div class="kicker"><span class="no">10</span><span class="label">Required Disclosure</span></div>
       <h2 id="h-disclosure">The part that isn't a joke.</h2>
       <p class="lede">Beneath this page sits a complete, working exercise in specification-first engineering: <strong>two formal specs</strong> (an AsyncAPI 3.0 event contract and a TypeScript-first MCP spec, structured like the official one), a <strong>five-stage validation gate</strong> with cross-spec drift detection, <strong>deterministic polyglot codegen</strong> (Go, Python, TypeScript), <strong>contract tests derived from the spec's own examples</strong>, a <strong>generated MCP server</strong> that passes 14 live conformance checks, and <strong>mutation testing</strong> that kills all 98 injected defects.</p>
-      <p class="lede">The marketing above is a parody. The engineering below it is not. <strong>That is the joke</strong> — and the repository doubles as a study guide, seven chapters long, with exercises.</p>
+      <p class="lede">The dogfood demos are real too: a Go consumer imports the generated client package, the startup scenarios drive the generated MCP server over stdio, and the terminal GIF is rendered from a live run. The marketing above is a parody. The engineering below it is not. <strong>That is the joke</strong> — and the repository doubles as a study guide, seven chapters long, with exercises.</p>
       <code class="repo-line"><span>$ </span>claude mcp add fafo -- npx tsx gen/typescript/fafo-server/server.ts</code>
       <div class="doc-links">
         <a href="https://github.com/copyleftdev/fafoaas">The repository</a>
         <a href="https://github.com/copyleftdev/fafoaas#the-study-guide">The curriculum</a>
+        <a href="https://github.com/copyleftdev/fafoaas#dogfooding-burnrate-ai-finds-out">Dogfood harness</a>
         <a href="https://github.com/copyleftdev/fafoaas/blob/main/spec/mcp/FAFO-MCP.md">FAFO-MCP spec</a>
         <a href="https://github.com/tomdionysus/foaas">In memory of FOAAS</a>
       </div>
@@ -778,7 +848,7 @@
   </section>
 
   <section class="block wrap reveal" id="faq" aria-labelledby="h-faq">
-    <div class="kicker"><span class="no">10</span><span class="label">FAQ</span></div>
+    <div class="kicker"><span class="no">11</span><span class="label">FAQ</span></div>
     <h2 id="h-faq">Questions, frequently asked. Answers, rarely heeded.</h2>
     <div class="faq">
       <details>

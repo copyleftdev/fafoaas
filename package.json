@@ -8,6 +8,10 @@
     "check:b5": "node scripts/check-b5-drift.mjs",
     "validate": "./scripts/validate.sh",
     "codegen": "./scripts/codegen.sh",
+    "dogfood": "tsx scripts/dogfood.mts",
+    "dogfood:startup": "tsx scripts/dogfood-startup.mts",
+    "dogfood:chaos": "tsx scripts/dogfood-chaos.mts",
+    "demo:terminal": "tsx scripts/demo-terminal.mts",
     "test:mutation": "tsx scripts/mutation-test.mts"
   },
   "license": "WTFPL",

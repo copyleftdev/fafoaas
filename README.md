@@ -321,12 +321,68 @@ The AI story runs in both registers, like everything else here:
 claude mcp add fafo -- npx tsx gen/typescript/fafo-server/server.ts
 ```
 
+## Dogfooding: BurnRate AI finds out
+
+The repo now includes live dogfood harnesses that use the generated MCP
+server over the real protocol instead of merely admiring the contract from a
+distance. They are deliberately theatrical, because agent evals should be
+memorable, but the checks are concrete: tool annotations, subscriptions,
+deferred replies, `_meta.fafoId`, materialization, ledgers, lessons, and
+post-conclusion errors.
+
+```sh
+npm run dogfood
+npm run dogfood:startup
+npm run dogfood:chaos
+```
+
+The largest scenario, `dogfood:chaos`, simulates **BurnRate AI**, a fully
+agentic startup where every department has automated itself just enough to
+become a compliance event. Twelve staff agents subscribe to their own
+findout streams, declare intent, escalate selected threads, wait for
+materialization, record lessons, and then prove a concluded thread rejects
+further escalation.
+
+Current representative chaos run:
+
+```json
+{
+  "startup": "BurnRate AI",
+  "staff": 12,
+  "materialized": 12,
+  "biblical": 5,
+  "disproportionate": 1,
+  "proportional": 6,
+  "highestSeverity": 27,
+  "averageSeverity": 15.48,
+  "updates": 12
+}
+```
+
+There is also a terminal demo intended to be sent to another human before
+they ask why any of this exists:
+
+```sh
+npm run demo:terminal
+asciinema rec --overwrite --quiet --cols 100 --rows 32 \
+  -c 'npm_config_loglevel=silent npm run demo:terminal' \
+  demo/fafo-chaos.cast
+agg demo/fafo-chaos.cast demo/fafo-chaos.gif
+```
+
+The generated GIF lives at [`demo/fafo-chaos.gif`](demo/fafo-chaos.gif). The
+GitHub Pages copy lives at [`docs/assets/demo/fafo-chaos.gif`](docs/assets/demo/fafo-chaos.gif).
+
 ## Commands
 
 | Command | What it does |
 |---|---|
 | `npm run validate` | 5-stage spec gate: AsyncAPI tree → bundle → tsc → schema.json sync → B5 drift |
 | `npm run codegen` | validate, then generate Go/Python/TS clients + fafo-mcp server, then run all contract tests + server conformance |
+| `npm run dogfood` | live MCP smoke: subscribe, fuck around, find out, record a lesson |
+| `npm run dogfood:startup` | multi-actor startup scenario: Pivot Labs finds out in four threads |
+| `npm run dogfood:chaos` | full agentic-staff chaos scenario: BurnRate AI, 12 actors, escalations, ledgers |
+| `npm run demo:terminal` | terminal-rendered BurnRate AI incident room, suitable for GIF capture |
 | `npm run test:mutation` | 98 mutants across clients, specs, and server; all must die |
 | `npm run generate` | regenerate `spec/mcp/schema.json` from `schema.ts` only |
 | `npx tsx gen/typescript/fafo-server/server.ts` | run the reference fafo-mcp server (stdio) |
@@ -356,6 +412,8 @@ scripts/
 ├── check-b5-drift.mjs     # cross-spec semantic drift detection
 ├── codegen.mts            # polyglot generator (imports schema.ts directly)
 ├── codegen.sh             # THE one command
+├── dogfood*.mts           # live MCP dogfood scenarios
+├── demo-terminal.mts      # terminal demo renderer
 └── mutation-test.mts      # 98 mutants, 3 oracles
 gen/                       # all generated, byte-deterministic, stamped
 ├── go/fafo/               # models + contract + contract_test (go test)
@@ -363,6 +421,12 @@ gen/                       # all generated, byte-deterministic, stamped
 └── typescript/
     ├── fafo/              # models + contract + contract.test.ts
     └── fafo-server/       # runnable fafo-mcp reference server + conformance
+examples/
+└── go-client/             # tiny consumer of the generated Go client package
+demo/
+├── fafo-chaos.cast        # asciinema recording
+├── fafo-chaos.gif         # sendable terminal GIF
+└── terminal-demo.tape     # VHS recipe
 ```
 
 ## Design stance (the transferable part)
