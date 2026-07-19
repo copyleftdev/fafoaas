@@ -1,5 +1,7 @@
 # FAFOaaS — FAFO as a Service
 
+[![Tip my tokens](https://tokentip.to/badge/copyleftdev.svg?logo=1)](https://tokentip.to/@copyleftdev)
+
 > **Causality as a Service.** You publish that you are fucking around.
 > You subscribe to find out.
 
